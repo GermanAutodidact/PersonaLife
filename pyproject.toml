@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "personalife"
+version = "1.0.0"
+description = "Local-first event-sourced life simulation for LLM personas"
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+dependencies = ["tzdata>=2024.1; sys_platform == 'win32'"]
+
+[project.scripts]
+personalife = "personalife.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["personalife*"]

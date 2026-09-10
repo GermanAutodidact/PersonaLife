@@ -1,0 +1,35 @@
+# Validation report
+
+Executed in this build: Linux, Python 3.12, 2026-09-10.
+
+- **45 automated tests passed** in the final local run. Full output is in `test-results.txt`. The wheel also built and installed successfully in an isolated target directory, and its CLI started.
+- AiMemory round-trip used the actual fetched `database.py` / `models.py` from its current repository. The ordinary test suite skips this optional external integration when AiMemory is not installed.
+- All ten occupation presets passed seven simulated days each with a daily 10:25–12:10 chat and a consistency check after every day.
+- Three-day Jenna example: 319 ledger events, 54 executed segments and 11 exported selected memories in the generated example run.
+- Original plans remain available after rescheduling; daily examples include relationships and context from the next day.
+
+## Tested adversarial cases
+
+| Risk | Verification |
+|---|---|
+| Conversation overlaps shopping | Shopping is postponed; actual chat occupies its interval |
+| Chat before work | Commute still consumes 25 minutes; lateness is explicit |
+| Lost interrupted work | 25 of 60 minutes completed leaves 35 minutes |
+| Mid-journey interruption | Remaining route resumes without teleportation |
+| Offline restart | Six-hour catch-up persists, then repeated advance is idempotent |
+| Multiple sessions / duplicates | Concurrent open chats rejected; stable retries deduplicated; key collisions rejected |
+| Canonical rewrite | SQL update/delete triggers reject ordinary mutation; hash chain verifies |
+| Plan asserted as completion | Planning alone creates zero actual progress |
+| Invalid time | Naive timestamps, negative durations and nonexistent civil times rejected |
+| DST | Spring day 23 hours, autumn day 25 hours; repeated local time folds differ by one hour |
+| Wrong place | Unknown locations and missing routes rejected; actual location continuity checked |
+| Memory contamination | Separate namespaces; immutable local memory IDs |
+| Model access | Narrative adapters do not expose ledger mutation |
+| API access | Token required; arbitrary internal method dispatch refused |
+| Oversized context | Bounded response under configured context budget |
+
+## What this does not certify
+
+This is not an external penetration test, formal proof, medical simulation validation or production load certification. Live Mem0/Letta/OpenAI accounts were not used. Windows/macOS were not locally available for execution. The committed CI workflow requests Windows and Linux runs; inspect GitHub Actions for their eventual result instead of treating the configuration itself as a passing run.
+
+Provider output grounding is a host-level presentation concern. Core invariants prevent prose from automatically rewriting the timeline; they cannot guarantee that a language model never embellishes a sentence.

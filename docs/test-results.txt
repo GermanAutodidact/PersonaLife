@@ -1,0 +1,50 @@
+test_failed_reschedule_rolls_back (test_adversarial.AdversarialTests.test_failed_reschedule_rolls_back) ... ok
+test_full_dst_days_execute_actual_duration (test_adversarial.AdversarialTests.test_full_dst_days_execute_actual_duration) ... ok
+test_shift_leave_and_home_office (test_adversarial.AdversarialTests.test_shift_leave_and_home_office) ... ok
+test_shift_overtime_is_repeatable (test_adversarial.AdversarialTests.test_shift_overtime_is_repeatable) ... ok
+test_two_instances_observe_same_canonical_state (test_adversarial.AdversarialTests.test_two_instances_observe_same_canonical_state) ... ok
+test_api_full_flow (test_integrations.APITests.test_api_full_flow) ... ok
+test_auth_required (test_integrations.APITests.test_auth_required) ... ok
+test_no_arbitrary_method (test_integrations.APITests.test_no_arbitrary_method) ... ok
+test_token_required (test_integrations.APITests.test_token_required) ... ok
+test_aimemory_real_roundtrip (test_integrations.ProviderTests.test_aimemory_real_roundtrip) ... ok
+test_json_immutable (test_integrations.ProviderTests.test_json_immutable) ... ok
+test_local_llm_adapters (test_integrations.ProviderTests.test_local_llm_adapters) ... ok
+test_openai_compatible_contract (test_integrations.ProviderTests.test_openai_compatible_contract) ... ok
+test_remote_http_rejected (test_integrations.ProviderTests.test_remote_http_rejected) ... ok
+test_bounded_context (test_simulation.SimulationTests.test_bounded_context) ... ok
+test_chat_key_collision (test_simulation.SimulationTests.test_chat_key_collision) ... ok
+test_chat_mid_travel_resume (test_simulation.SimulationTests.test_chat_mid_travel_resume) ... ok
+test_cleaning_preserves_25_minutes (test_simulation.SimulationTests.test_cleaning_preserves_25_minutes) ... ok
+test_database_immutable (test_simulation.SimulationTests.test_database_immutable) ... ok
+test_day_generation_idempotent (test_simulation.SimulationTests.test_day_generation_idempotent) ... ok
+test_duplicate_chat_is_idempotent (test_simulation.SimulationTests.test_duplicate_chat_is_idempotent) ... ok
+test_duplicate_event_rejected (test_simulation.SimulationTests.test_duplicate_event_rejected) ... ok
+test_fall_dst (test_simulation.SimulationTests.test_fall_dst) ... ok
+test_future_day_cannot_close (test_simulation.SimulationTests.test_future_day_cannot_close) ... ok
+test_hook_once (test_simulation.SimulationTests.test_hook_once) ... ok
+test_invalid_timestamp (test_simulation.SimulationTests.test_invalid_timestamp) ... ok
+test_late_chat_does_not_rewrite_past (test_simulation.SimulationTests.test_late_chat_does_not_rewrite_past) ... ok
+test_late_work_requires_commute (test_simulation.SimulationTests.test_late_work_requires_commute) ... ok
+test_live_chat_cross_midnight (test_simulation.SimulationTests.test_live_chat_cross_midnight) ... ok
+test_live_chat_holds_time (test_simulation.SimulationTests.test_live_chat_holds_time) ... ok
+test_memory_export_and_namespace (test_simulation.SimulationTests.test_memory_export_and_namespace) ... ok
+test_negative_chat_duration (test_simulation.SimulationTests.test_negative_chat_duration) ... ok
+test_no_unknown_location (test_simulation.SimulationTests.test_no_unknown_location) ... ok
+test_no_unknown_route (test_simulation.SimulationTests.test_no_unknown_route) ... ok
+test_nonexistent_civil_time (test_simulation.SimulationTests.test_nonexistent_civil_time) ... ok
+test_offline_catchup_restart (test_simulation.SimulationTests.test_offline_catchup_restart) ... ok
+test_original_plan_preserved (test_simulation.SimulationTests.test_original_plan_preserved) ... ok
+test_parallel_chat_rejected (test_simulation.SimulationTests.test_parallel_chat_rejected) ... ok
+test_plan_is_not_actual (test_simulation.SimulationTests.test_plan_is_not_actual) ... ok
+test_randomness_repeatable (test_simulation.SimulationTests.test_randomness_repeatable) ... ok
+test_recurrences (test_simulation.SimulationTests.test_recurrences) ... ok
+test_route_graph (test_simulation.SimulationTests.test_route_graph) ... ok
+test_shopping_chat_conflict (test_simulation.SimulationTests.test_shopping_chat_conflict) ... ok
+test_spring_dst (test_simulation.SimulationTests.test_spring_dst) ... ok
+test_three_days_night_shifts (test_simulation.SimulationTests.test_three_days_night_shifts) ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 2.662s
+
+OK

@@ -1,0 +1,117 @@
+{
+  "id": "jenna",
+  "name": "Jenna",
+  "age": 25,
+  "timezone": "Europe/Berlin",
+  "home": "home",
+  "seed": 42,
+  "occupation": {
+    "title": "bartender",
+    "employer": "Example employer",
+    "employment_type": "part_time",
+    "workweek": {
+      "tuesday": [
+        "17:00",
+        "01:00"
+      ],
+      "wednesday": [
+        "17:00",
+        "01:00"
+      ],
+      "thursday": [
+        "17:00",
+        "01:00"
+      ],
+      "friday": [
+        "17:00",
+        "01:00"
+      ],
+      "saturday": [
+        "17:00",
+        "01:00"
+      ]
+    },
+    "workplace": "work",
+    "commute_minutes": 25,
+    "coworkers": [
+      "lisa"
+    ],
+    "task_types": [
+      "Customer service",
+      "Closing the bar"
+    ],
+    "exceptions": {}
+  },
+  "locations": [
+    {
+      "id": "home",
+      "name": "Home"
+    },
+    {
+      "id": "work",
+      "name": "Workplace"
+    },
+    {
+      "id": "shop",
+      "name": "Supermarket"
+    },
+    {
+      "id": "gym",
+      "name": "Gym"
+    }
+  ],
+  "travel_times": {
+    "home->shop": 15,
+    "home->gym": 20
+  },
+  "sleep": {
+    "start": "23:00",
+    "hours": 8
+  },
+  "hobbies": [
+    "Gaming",
+    "Reading",
+    "Music"
+  ],
+  "relationships": [
+    {
+      "id": "lisa",
+      "name": "Lisa",
+      "relationship_type": "coworker",
+      "personality_tags": [
+        "helpful",
+        "funny"
+      ],
+      "strength": 55,
+      "availability": "work shifts",
+      "location": "work",
+      "occupation": "coworker"
+    }
+  ],
+  "routines": [
+    {
+      "id": "shopping",
+      "title": "Shopping",
+      "kind": "routine",
+      "time": "14:00",
+      "minutes": 45,
+      "location": "shop",
+      "frequency": "weekly",
+      "weekdays": [
+        1,
+        4
+      ],
+      "priority": 70
+    },
+    {
+      "id": "cleaning",
+      "title": "Clean apartment",
+      "kind": "routine",
+      "time": "12:00",
+      "minutes": 60,
+      "location": "home",
+      "frequency": "daily",
+      "priority": 60
+    }
+  ]
+}
