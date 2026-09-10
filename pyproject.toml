@@ -4,8 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "personalife"
-version = "1.0.1"
-description = "Persistent life simulation for AI characters, LLM personas and NPCs"
+version = "1.1.0"
+description = "Persistent life simulation for AI characters / Fortlaufende Lebenssimulation für KI-Charaktere"
+classifiers = ["Natural Language :: English", "Natural Language :: German"]
 keywords = ["ai-characters", "llm", "npc", "life-simulation", "persistent-memory", "local-first"]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -14,6 +15,7 @@ dependencies = ["tzdata>=2024.1; sys_platform == 'win32'"]
 
 [project.urls]
 Repository = "https://github.com/GermanAutodidact/PersonaLife"
+"Dokumentation (Deutsch)" = "https://github.com/GermanAutodidact/PersonaLife/blob/main/README.de.md"
 Documentation = "https://github.com/GermanAutodidact/PersonaLife/blob/main/README.md"
 Issues = "https://github.com/GermanAutodidact/PersonaLife/issues"
 

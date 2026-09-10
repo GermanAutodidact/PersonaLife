@@ -1,5 +1,7 @@
 # Host integrations and public API
 
+[Deutsch](integrations.de.md)
+
 No provider-specific code exists in the simulation core. A chat host can switch LLMs while continuing to use the same SQLite database and persona ID. ChatGPT/Gemini browser or phone applications do not gain access merely by installing this package. Use a host you control or an appropriately configured connector to call the API and inject context.
 
 ## Typical host lifecycle
@@ -43,8 +45,12 @@ Base: `http://127.0.0.1:8787/v1`. All routes require `Authorization: Bearer <PER
 
 GET reads do not advance canonical time. Explicitly POST advance before a read outside a live session. Python `get_persona_context(..., now=...)` can combine those operations.
 
+## Language
+
+`Accept-Language: de` or `en` selects API errors and occupation preset labels. Regional variants and quality weights are supported. New personas inherit the requested language when `profile.language` is omitted. Already stored text is returned as recorded. JSON keys, routes and state IDs stay stable. See [languages](languages.md).
+
 ## Python model adapters
 
 `OpenAICompatible(base_url, model, api_key='', timeout=30)` targets `/chat/completions`. LM Studio defaults to `http://localhost:1234/v1`; Ollama to `http://localhost:11434/v1`. OpenRouter or other providers can supply their compatible HTTPS base URL. Credentials belong in the caller/environment, never in persona JSON or the Git repository.
 
-`narrate(context)` returns display prose only. It is not fact validation and is never written back as canonical history. A model can still embellish its response; keep the structured timeline available to users and implement a host-side grounding check if stronger presentation guarantees are needed.
+`narrate(context)` returns display prose only and requests the language in `context.language`. It is not fact validation and is never written back as canonical history. A model can still embellish its response; keep the structured timeline available to users and implement a host-side grounding check if stronger presentation guarantees are needed.

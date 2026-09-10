@@ -13,3 +13,6 @@ dist/
 !.env.example
 demo-output/
 examples/generated/memories/
+
+demo-output-*/
+examples/generated-de/memories/

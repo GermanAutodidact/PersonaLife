@@ -1,5 +1,7 @@
 # Architecture
 
+[Deutsch](architecture.de.md)
+
 ## Ownership
 
 `ledger.py` owns the canonical SQLite event log. `projections.py` reconstructs persona state, plans, actual segments, chat sessions, relationships, stories and memory exports from it. `service.py` exposes transaction boundaries. No model provider writes to the ledger.

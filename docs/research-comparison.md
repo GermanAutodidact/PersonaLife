@@ -1,5 +1,7 @@
 # Source research comparison
 
+[Deutsch](research-comparison.de.md)
+
 Inspected 2026-09-10 through the connected GitHub source API. The source-evidence JSON records repository commits and blob hashes for inspected license, implementation and test files. Inspection was targeted, not a full security audit or execution of every upstream test suite. PersonaLife's implementation is independently authored; no upstream implementation files are included.
 
 | Repository | Actual inspected modules/tests | Useful idea | Observed license | Decision |

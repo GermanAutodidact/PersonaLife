@@ -18,7 +18,7 @@
       "shift_date": "2026-09-09",
       "start": "2026-09-09T19:20:00+00:00",
       "state": "planned",
-      "title": "Closing the bar"
+      "title": "Bar abschließen"
     },
     {
       "end": "2026-09-09T23:55:00+00:00",
@@ -32,7 +32,7 @@
       "required": 3300.0,
       "start": "2026-09-09T23:00:00+00:00",
       "state": "planned",
-      "title": "Free time"
+      "title": "Freizeit"
     },
     {
       "end": "2026-09-10T07:55:00+00:00",
@@ -46,7 +46,7 @@
       "required": 28800.0,
       "start": "2026-09-09T23:55:00+00:00",
       "state": "planned",
-      "title": "Sleep"
+      "title": "Schlafen"
     },
     {
       "end": "2026-09-10T08:25:00+00:00",
@@ -62,7 +62,7 @@
       "required": 1800.0,
       "start": "2026-09-10T07:55:00+00:00",
       "state": "planned",
-      "title": "Meal"
+      "title": "Mahlzeit"
     },
     {
       "end": "2026-09-10T10:00:00+00:00",
@@ -76,7 +76,7 @@
       "required": 5700.0,
       "start": "2026-09-10T08:25:00+00:00",
       "state": "planned",
-      "title": "Free time"
+      "title": "Freizeit"
     },
     {
       "end": "2026-09-10T11:00:00+00:00",
@@ -92,7 +92,7 @@
       "required": 3600.0,
       "start": "2026-09-10T10:00:00+00:00",
       "state": "planned",
-      "title": "Clean apartment"
+      "title": "Wohnung putzen"
     },
     {
       "end": "2026-09-10T11:30:00+00:00",
@@ -108,7 +108,7 @@
       "required": 1800.0,
       "start": "2026-09-10T11:00:00+00:00",
       "state": "planned",
-      "title": "Meal"
+      "title": "Mahlzeit"
     },
     {
       "end": "2026-09-10T13:00:00+00:00",
@@ -122,7 +122,7 @@
       "required": 5400.0,
       "start": "2026-09-10T11:30:00+00:00",
       "state": "planned",
-      "title": "Free time"
+      "title": "Freizeit"
     },
     {
       "end": "2026-09-10T14:00:00+00:00",
@@ -138,7 +138,7 @@
       "required": 3600.0,
       "start": "2026-09-10T13:00:00+00:00",
       "state": "planned",
-      "title": "Music"
+      "title": "Musik"
     },
     {
       "end": "2026-09-10T14:35:00+00:00",
@@ -152,7 +152,7 @@
       "required": 2100.0,
       "start": "2026-09-10T14:00:00+00:00",
       "state": "planned",
-      "title": "Free time"
+      "title": "Freizeit"
     },
     {
       "end": "2026-09-10T15:00:00+00:00",
@@ -168,7 +168,7 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T14:35:00+00:00",
       "state": "planned",
-      "title": "Travel to work"
+      "title": "Arbeitsweg"
     },
     {
       "deadline": "2026-09-10T15:00:00+00:00",
@@ -187,7 +187,7 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T15:00:00+00:00",
       "state": "planned",
-      "title": "Preparation"
+      "title": "Vorbereitung"
     },
     {
       "deadline": "2026-09-10T15:15:00+00:00",
@@ -206,7 +206,7 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T15:15:00+00:00",
       "state": "planned",
-      "title": "Customer service"
+      "title": "Kundenbetreuung"
     },
     {
       "deadline": "2026-09-10T19:00:00+00:00",
@@ -225,7 +225,7 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T19:00:00+00:00",
       "state": "planned",
-      "title": "Work break"
+      "title": "Arbeitspause"
     },
     {
       "deadline": "2026-09-10T19:20:00+00:00",
@@ -244,7 +244,7 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T19:20:00+00:00",
       "state": "planned",
-      "title": "Closing the bar"
+      "title": "Bar abschließen"
     },
     {
       "end": "2026-09-09T23:55:00+00:00",
@@ -259,7 +259,7 @@
       "required": 1500.0,
       "start": "2026-09-09T23:30:00+00:00",
       "state": "planned",
-      "title": "Travel to Home"
+      "title": "Weg nach Zuhause"
     },
     {
       "end": "2026-09-10T15:00:00+00:00",
@@ -274,7 +274,7 @@
       "required": 1500.0,
       "start": "2026-09-10T14:35:00+00:00",
       "state": "planned",
-      "title": "Travel to Workplace"
+      "title": "Weg nach Arbeitsplatz"
     }
   ],
   "plan": [
@@ -295,7 +295,7 @@
       "shift_date": "2026-09-09",
       "start": "2026-09-09T19:20:00+00:00",
       "state": "completed",
-      "title": "Closing the bar"
+      "title": "Bar abschließen"
     },
     {
       "end": "2026-09-09T23:55:00+00:00",
@@ -309,8 +309,8 @@
       "required": 3300.0,
       "start": "2026-09-09T23:00:00+00:00",
       "state": "cancelled",
-      "title": "Free time",
-      "reason": "Travel required before activity; replace future route/free time"
+      "title": "Freizeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig; zukünftige Wege und Freizeit neu planen"
     },
     {
       "end": "2026-09-10T07:55:00+00:00",
@@ -324,8 +324,8 @@
       "required": 28800.0,
       "start": "2026-09-09T23:55:00+00:00",
       "state": "completed",
-      "title": "Sleep",
-      "reason": "Travel required before activity"
+      "title": "Schlafen",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-10T08:25:00+00:00",
@@ -341,8 +341,8 @@
       "required": 1800.0,
       "start": "2026-09-10T07:55:00+00:00",
       "state": "completed",
-      "title": "Meal",
-      "reason": "Travel required before activity"
+      "title": "Mahlzeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-10T10:00:00+00:00",
@@ -356,8 +356,8 @@
       "required": 5700.0,
       "start": "2026-09-10T08:25:00+00:00",
       "state": "cancelled",
-      "title": "Free time",
-      "reason": "Travel required before activity; replace future route/free time"
+      "title": "Freizeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig; zukünftige Wege und Freizeit neu planen"
     },
     {
       "end": "2026-09-10T11:00:00+00:00",
@@ -373,8 +373,8 @@
       "required": 3600.0,
       "start": "2026-09-10T10:00:00+00:00",
       "state": "completed",
-      "title": "Clean apartment",
-      "reason": "Travel required before activity"
+      "title": "Wohnung putzen",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-10T11:30:00+00:00",
@@ -390,8 +390,8 @@
       "required": 1800.0,
       "start": "2026-09-10T11:00:00+00:00",
       "state": "completed",
-      "title": "Meal",
-      "reason": "Travel required before activity"
+      "title": "Mahlzeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-10T13:00:00+00:00",
@@ -405,8 +405,8 @@
       "required": 5400.0,
       "start": "2026-09-10T11:30:00+00:00",
       "state": "cancelled",
-      "title": "Free time",
-      "reason": "Travel required before activity; replace future route/free time"
+      "title": "Freizeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig; zukünftige Wege und Freizeit neu planen"
     },
     {
       "end": "2026-09-10T14:00:00+00:00",
@@ -422,8 +422,8 @@
       "required": 3600.0,
       "start": "2026-09-10T13:00:00+00:00",
       "state": "completed",
-      "title": "Music",
-      "reason": "Travel required before activity"
+      "title": "Musik",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-10T14:35:00+00:00",
@@ -437,8 +437,8 @@
       "required": 2100.0,
       "start": "2026-09-10T14:00:00+00:00",
       "state": "cancelled",
-      "title": "Free time",
-      "reason": "Travel required before activity; replace future route/free time"
+      "title": "Freizeit",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig; zukünftige Wege und Freizeit neu planen"
     },
     {
       "end": "2026-09-10T15:00:00+00:00",
@@ -454,8 +454,8 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T14:35:00+00:00",
       "state": "cancelled",
-      "title": "Travel to work",
-      "reason": "Travel required before activity; replace future route/free time"
+      "title": "Arbeitsweg",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig; zukünftige Wege und Freizeit neu planen"
     },
     {
       "deadline": "2026-09-10T15:00:00+00:00",
@@ -474,8 +474,8 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T15:00:00+00:00",
       "state": "completed",
-      "title": "Preparation",
-      "reason": "Travel required before activity"
+      "title": "Vorbereitung",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "deadline": "2026-09-10T15:15:00+00:00",
@@ -494,8 +494,8 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T15:15:00+00:00",
       "state": "completed",
-      "title": "Customer service",
-      "reason": "Travel required before activity"
+      "title": "Kundenbetreuung",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "deadline": "2026-09-10T19:00:00+00:00",
@@ -514,8 +514,8 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T19:00:00+00:00",
       "state": "completed",
-      "title": "Work break",
-      "reason": "Travel required before activity"
+      "title": "Arbeitspause",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "deadline": "2026-09-10T19:20:00+00:00",
@@ -534,8 +534,8 @@
       "shift_date": "2026-09-10",
       "start": "2026-09-10T19:20:00+00:00",
       "state": "active",
-      "title": "Closing the bar",
-      "reason": "Travel required before activity"
+      "title": "Bar abschließen",
+      "reason": "Vor der Aktivität ist ein Ortswechsel nötig"
     },
     {
       "end": "2026-09-09T23:55:00+00:00",
@@ -550,7 +550,7 @@
       "required": 1500.0,
       "start": "2026-09-09T23:30:00+00:00",
       "state": "completed",
-      "title": "Travel to Home"
+      "title": "Weg nach Zuhause"
     },
     {
       "end": "2026-09-10T15:00:00+00:00",
@@ -565,7 +565,7 @@
       "required": 1500.0,
       "start": "2026-09-10T14:35:00+00:00",
       "state": "completed",
-      "title": "Travel to Workplace"
+      "title": "Weg nach Arbeitsplatz"
     }
   ],
   "actual": [
@@ -586,8 +586,8 @@
         "social_energy": 21.33333333333333,
         "stress": 22.416666666666664
       },
-      "title": "Closing the bar",
-      "event_id": "fbf07b45-8d17-4b90-9e63-6a3f8b2480ea"
+      "title": "Bar abschließen",
+      "event_id": "140ebce4-840c-45d6-9295-549ae8ff307d"
     },
     {
       "activity_id": null,
@@ -606,8 +606,8 @@
         "social_energy": 21.33333333333333,
         "stress": 21.416666666666664
       },
-      "title": "Free time",
-      "event_id": "297a2bcf-fc9b-4946-aa66-48bf8600f5ef"
+      "title": "Freizeit",
+      "event_id": "583e82a8-92f7-423d-82d7-134a19125fc5"
     },
     {
       "activity_id": "b99dab4a6dba2fd6a111752a",
@@ -626,8 +626,8 @@
         "social_energy": 21.33333333333333,
         "stress": 21.833333333333332
       },
-      "title": "Travel to Home",
-      "event_id": "41f237fb-ecb6-42d5-a78d-9d6acb156719"
+      "title": "Weg nach Zuhause",
+      "event_id": "3af2244b-3591-46c0-a9cb-7b6b358ce5c1"
     },
     {
       "activity_id": "69ef3f44d41599a2128e1d6a",
@@ -646,8 +646,8 @@
         "social_energy": 21.33333333333333,
         "stress": 5.833333333333332
       },
-      "title": "Sleep",
-      "event_id": "e554fdd1-f843-41a8-9b13-e993550d2d90"
+      "title": "Schlafen",
+      "event_id": "fba3a36f-ea4d-452d-863a-98b23e5f86a6"
     },
     {
       "activity_id": "c1e3119e80527295bba82938",
@@ -666,8 +666,8 @@
         "social_energy": 21.33333333333333,
         "stress": 4.333333333333332
       },
-      "title": "Meal",
-      "event_id": "a880f848-80ff-4c62-baed-5062647e8f39"
+      "title": "Mahlzeit",
+      "event_id": "d6f761ed-9680-4ef4-b762-458fddc81330"
     },
     {
       "activity_id": null,
@@ -686,8 +686,8 @@
         "social_energy": 21.33333333333333,
         "stress": 1.1666666666666656
       },
-      "title": "Free time",
-      "event_id": "15a789dd-031c-448b-a45b-e3cd24dd2934"
+      "title": "Freizeit",
+      "event_id": "b8113c89-284e-4797-ab21-b07f1d8c8ede"
     },
     {
       "activity_id": "41d7a8dc80c28067b698f34e",
@@ -706,8 +706,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0.16666666666666563
       },
-      "title": "Clean apartment",
-      "event_id": "6709653a-e839-413c-a84a-c83e94a12961"
+      "title": "Wohnung putzen",
+      "event_id": "2e249171-1f1c-4bc3-87fe-a087124ce481"
     },
     {
       "activity_id": "acc3dde5f92e621712c18662",
@@ -726,8 +726,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0
       },
-      "title": "Meal",
-      "event_id": "44fe917e-dfb9-40e4-bbba-98530ab97bbc"
+      "title": "Mahlzeit",
+      "event_id": "892b5e42-26f3-4c1d-8af1-f728f6840947"
     },
     {
       "activity_id": null,
@@ -746,8 +746,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0
       },
-      "title": "Free time",
-      "event_id": "d9764058-4c52-45eb-9c02-e286cb4a8489"
+      "title": "Freizeit",
+      "event_id": "9da0e4bb-79ee-4735-a472-2a5c05d8ebfc"
     },
     {
       "activity_id": "46ea9236da7f493b6d90e1b4",
@@ -766,8 +766,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0
       },
-      "title": "Music",
-      "event_id": "26930369-d51c-4fd8-904f-5f6e79e5f11f"
+      "title": "Musik",
+      "event_id": "17e5c1ba-2d2f-45b4-ba3a-14577eaf9969"
     },
     {
       "activity_id": null,
@@ -786,8 +786,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0
       },
-      "title": "Free time",
-      "event_id": "54e3ec6b-7977-432e-8497-f725ff19cf98"
+      "title": "Freizeit",
+      "event_id": "ad81d89e-f848-423b-b0f3-8e46ca5a5447"
     },
     {
       "activity_id": "2f22ddd976137b3900d24510",
@@ -806,8 +806,8 @@
         "social_energy": 21.33333333333333,
         "stress": 0.4166666666666667
       },
-      "title": "Travel to Workplace",
-      "event_id": "12b4057c-d24a-475a-b99a-ab1f26cfcadd"
+      "title": "Weg nach Arbeitsplatz",
+      "event_id": "e7dc1f1f-740d-4196-9f16-3453d79c35fb"
     },
     {
       "activity_id": "4825acc6cbb171cbd969ab5e",
@@ -826,8 +826,8 @@
         "social_energy": 20.58333333333333,
         "stress": 1.1666666666666667
       },
-      "title": "Preparation",
-      "event_id": "c090baf9-ad13-40fd-ab25-c1d7453298ba"
+      "title": "Vorbereitung",
+      "event_id": "310ce0ae-ce98-4994-aa99-2410c986ff60"
     },
     {
       "activity_id": "a094608356e4fc51522b5ce5",
@@ -846,8 +846,8 @@
         "social_energy": 9.333333333333329,
         "stress": 12.416666666666666
       },
-      "title": "Customer service",
-      "event_id": "dc18d1e1-979c-4735-9470-17ae89f23015"
+      "title": "Kundenbetreuung",
+      "event_id": "0d47476c-6d6c-4aa1-9501-7227df072e42"
     },
     {
       "activity_id": "760f60c924f4f045568d70d7",
@@ -866,8 +866,8 @@
         "social_energy": 9.333333333333329,
         "stress": 11.416666666666666
       },
-      "title": "Work break",
-      "event_id": "b9c6a44c-fabe-40a1-a608-32887e193ee9"
+      "title": "Arbeitspause",
+      "event_id": "48831c6d-6c09-49af-9adb-58c49d769c0b"
     },
     {
       "activity_id": "778222d4ef8805d155f43fd0",
@@ -886,24 +886,24 @@
         "social_energy": 1.3333333333333286,
         "stress": 19.416666666666664
       },
-      "title": "Closing the bar",
-      "event_id": "11290b43-0da1-4940-a6d7-d941bb986506"
+      "title": "Bar abschließen",
+      "event_id": "73d34281-e2b8-4c59-bf68-d1b95206075c"
     }
   ],
   "closing": {
     "date": "2026-09-10",
     "evidence_ids": [
-      "517e763e-1232-4522-bae6-fc15c14764f6",
-      "f2ab8168-09a8-425f-95b4-9e80442af31c"
+      "75355b9e-2504-49f0-88b0-90ec9253f461",
+      "a780d46e-5bcc-4b00-9409-b347b68d9171"
     ],
     "memory_candidates": [
       {
         "activity_id": "41d7a8dc80c28067b698f34e",
         "at": "2026-09-10T11:00:00+00:00",
         "confidence": 1.0,
-        "description": "I made satisfying progress with Clean apartment.",
+        "description": "Bei „Wohnung putzen“ bin ich gut vorangekommen.",
         "emotional_intensity": 7,
-        "event_id": "517e763e-1232-4522-bae6-fc15c14764f6",
+        "event_id": "75355b9e-2504-49f0-88b0-90ec9253f461",
         "importance": 5,
         "location": "home",
         "novelty": 7,
@@ -916,9 +916,9 @@
         "activity_id": "a094608356e4fc51522b5ce5",
         "at": "2026-09-10T19:00:00+00:00",
         "confidence": 1.0,
-        "description": "Lisa made me laugh during Customer service.",
+        "description": "Lisa hat mich bei „Kundenbetreuung“ zum Lachen gebracht.",
         "emotional_intensity": 5,
-        "event_id": "f2ab8168-09a8-425f-95b4-9e80442af31c",
+        "event_id": "a780d46e-5bcc-4b00-9409-b347b68d9171",
         "importance": 6,
         "location": "work",
         "novelty": 6,
@@ -933,7 +933,7 @@
     "open_tasks": [
       "778222d4ef8805d155f43fd0"
     ],
-    "reflection": "I made satisfying progress with Clean apartment.; Lisa made me laugh during Customer service.",
+    "reflection": "Bei „Wohnung putzen“ bin ich gut vorangekommen.; Lisa hat mich bei „Kundenbetreuung“ zum Lachen gebracht.",
     "state_at_closing": {
       "energy": 66.41666666666667,
       "fatigue": 33.583333333333336,
@@ -942,6 +942,6 @@
       "social_energy": 1.3333333333333286,
       "stress": 19.416666666666664
     },
-    "story": "2026-09-09T22:00:00+00:00 — 2026-09-09T23:00:00+00:00: Closing the bar\n2026-09-09T23:00:00+00:00 — 2026-09-09T23:30:00+00:00: Free time\n2026-09-09T23:30:00+00:00 — 2026-09-09T23:55:00+00:00: Travel to Home\n2026-09-09T23:55:00+00:00 — 2026-09-10T07:55:00+00:00: Sleep\n2026-09-10T07:55:00+00:00 — 2026-09-10T08:25:00+00:00: Meal\n2026-09-10T08:25:00+00:00 — 2026-09-10T10:00:00+00:00: Free time\n2026-09-10T10:00:00+00:00 — 2026-09-10T11:00:00+00:00: Clean apartment\n2026-09-10T11:00:00+00:00 — 2026-09-10T11:30:00+00:00: Meal\n2026-09-10T11:30:00+00:00 — 2026-09-10T13:00:00+00:00: Free time\n2026-09-10T13:00:00+00:00 — 2026-09-10T14:00:00+00:00: Music\n2026-09-10T14:00:00+00:00 — 2026-09-10T14:35:00+00:00: Free time\n2026-09-10T14:35:00+00:00 — 2026-09-10T15:00:00+00:00: Travel to Workplace\n2026-09-10T15:00:00+00:00 — 2026-09-10T15:15:00+00:00: Preparation\n2026-09-10T15:15:00+00:00 — 2026-09-10T19:00:00+00:00: Customer service\n2026-09-10T19:00:00+00:00 — 2026-09-10T19:20:00+00:00: Work break\n2026-09-10T19:20:00+00:00 — 2026-09-10T22:00:00+00:00: Closing the bar"
+    "story": "2026-09-09T22:00:00+00:00 — 2026-09-09T23:00:00+00:00: Bar abschließen\n2026-09-09T23:00:00+00:00 — 2026-09-09T23:30:00+00:00: Freizeit\n2026-09-09T23:30:00+00:00 — 2026-09-09T23:55:00+00:00: Weg nach Zuhause\n2026-09-09T23:55:00+00:00 — 2026-09-10T07:55:00+00:00: Schlafen\n2026-09-10T07:55:00+00:00 — 2026-09-10T08:25:00+00:00: Mahlzeit\n2026-09-10T08:25:00+00:00 — 2026-09-10T10:00:00+00:00: Freizeit\n2026-09-10T10:00:00+00:00 — 2026-09-10T11:00:00+00:00: Wohnung putzen\n2026-09-10T11:00:00+00:00 — 2026-09-10T11:30:00+00:00: Mahlzeit\n2026-09-10T11:30:00+00:00 — 2026-09-10T13:00:00+00:00: Freizeit\n2026-09-10T13:00:00+00:00 — 2026-09-10T14:00:00+00:00: Musik\n2026-09-10T14:00:00+00:00 — 2026-09-10T14:35:00+00:00: Freizeit\n2026-09-10T14:35:00+00:00 — 2026-09-10T15:00:00+00:00: Weg nach Arbeitsplatz\n2026-09-10T15:00:00+00:00 — 2026-09-10T15:15:00+00:00: Vorbereitung\n2026-09-10T15:15:00+00:00 — 2026-09-10T19:00:00+00:00: Kundenbetreuung\n2026-09-10T19:00:00+00:00 — 2026-09-10T19:20:00+00:00: Arbeitspause\n2026-09-10T19:20:00+00:00 — 2026-09-10T22:00:00+00:00: Bar abschließen"
   }
 }

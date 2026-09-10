@@ -1,14 +1,14 @@
 {
   "id": "jenna",
   "name": "Jenna",
-  "language": "en",
+  "language": "de",
   "age": 25,
   "timezone": "Europe/Berlin",
   "home": "home",
   "seed": 42,
   "occupation": {
     "title": "bartender",
-    "employer": "Example employer",
+    "employer": "Beispielarbeitgeber",
     "employment_type": "part_time",
     "workweek": {
       "tuesday": [
@@ -38,28 +38,28 @@
       "lisa"
     ],
     "task_types": [
-      "Customer service",
-      "Closing the bar"
+      "Kundenbetreuung",
+      "Bar abschließen"
     ],
     "exceptions": {},
-    "label": "bartender"
+    "label": "Barkeeper/in"
   },
   "locations": [
     {
       "id": "home",
-      "name": "Home"
+      "name": "Zuhause"
     },
     {
       "id": "work",
-      "name": "Workplace"
+      "name": "Arbeitsplatz"
     },
     {
       "id": "shop",
-      "name": "Supermarket"
+      "name": "Supermarkt"
     },
     {
       "id": "gym",
-      "name": "Gym"
+      "name": "Fitnessstudio"
     }
   ],
   "travel_times": {
@@ -71,9 +71,9 @@
     "hours": 8
   },
   "hobbies": [
-    "Gaming",
-    "Reading",
-    "Music"
+    "Spielen",
+    "Lesen",
+    "Musik"
   ],
   "relationships": [
     {
@@ -81,19 +81,19 @@
       "name": "Lisa",
       "relationship_type": "coworker",
       "personality_tags": [
-        "helpful",
-        "funny"
+        "hilfsbereit",
+        "humorvoll"
       ],
       "strength": 55,
-      "availability": "work shifts",
+      "availability": "während der Schichten",
       "location": "work",
-      "occupation": "coworker"
+      "occupation": "Kollegin/Kollege"
     }
   ],
   "routines": [
     {
       "id": "shopping",
-      "title": "Shopping",
+      "title": "Einkaufen",
       "kind": "routine",
       "time": "14:00",
       "minutes": 45,
@@ -107,7 +107,7 @@
     },
     {
       "id": "cleaning",
-      "title": "Clean apartment",
+      "title": "Wohnung putzen",
       "kind": "routine",
       "time": "12:00",
       "minutes": 60,

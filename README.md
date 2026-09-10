@@ -37,6 +37,18 @@ Use PersonaLife as the simulation layer in an AI companion, roleplay application
 
 **Project status:** working developer baseline with automated tests, not a turnkey companion app or a production-certified service. No native ChatGPT/Gemini connection is installed automatically. All character experiences are fictional simulation. See the [tested behavior and limits](docs/validation.md) before integrating.
 
+## English and German
+
+Public guides, the CLI interface and generated life text are available in English and German. Every guide links to its counterpart.
+
+```sh
+personalife --language en --help
+personalife --language de --help
+personalife --sprache de persona create
+```
+
+`PERSONALIFE_LANGUAGE` selects the CLI default. A persona's stored `language` selects newly generated simulation text. Existing history, custom text, command names and JSON keys are preserved. See [language behavior](docs/languages.md).
+
 ## Quick start
 
 Python 3.11 or newer. Windows 11, Linux and macOS are supported by the code; local tests run on Linux/Python 3.12, with GitHub CI covering Windows and Linux on Python 3.11–3.13. Windows includes `tzdata` as a platform dependency.
@@ -57,11 +69,12 @@ For an actual new persona, omit `--start` to initialize at the current time. A h
 Run the connected three-day example:
 
 ```sh
-python examples/three_days.py --output demo-output
+python examples/three_days.py --language en --output demo-output-en
+python examples/three_days.py --language de --output demo-output-de
 python -m unittest discover -s tests -v
 ```
 
-The example produces a SQLite database, original/current plans, actual timelines, daily stories, persistent memory records, relationship history and a validation report. Committed example output is under `examples/generated/`; its binary database and private memory files are excluded from Git.
+The example produces a SQLite database, original/current plans, actual timelines, daily stories, persistent memory records, relationship history and a validation report. Committed example output is under `examples/generated/` and `examples/generated-de/`; its binary database and private memory files are excluded from Git.
 
 ## What is implemented
 

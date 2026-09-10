@@ -1,5 +1,7 @@
 # Canonical event model
 
+[Deutsch](event-model.de.md)
+
 Each row contains sequence, globally unique event ID, persona ID, UTC occurrence time, kind, JSON data, predecessor hash and hash. Commands append atomically. Ordering is by sequence; timestamps describe simulated time.
 
 | Event | Meaning |

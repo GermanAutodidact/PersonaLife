@@ -1,4 +1,28 @@
 {
-  "description": "Persistent life simulation for AI characters, LLM personas and NPCs. Jobs, daily routines, chat-aware schedules and long-term memory in a local-first Python engine.",
-  "topics": ["ai-characters", "ai-companion", "llm", "persona", "npc", "life-simulation", "character-simulation", "persistent-memory", "conversational-ai", "roleplay", "event-sourcing", "local-first", "sqlite", "python", "ollama", "lm-studio"]
+  "description": "EN: Persistent life simulation for AI characters, LLM personas and NPCs: jobs, routines, chat-aware schedules and memory. Local-first Python. | DE: Fortlaufender Alltag für KI-Charaktere, LLM-Personas und NPCs: Berufe, Routinen, gesprächsabhängige Pläne und Gedächtnis. Lokal mit Python.",
+  "topics": [
+    "ai-characters",
+    "ai-companion",
+    "llm",
+    "persona",
+    "npc",
+    "life-simulation",
+    "character-simulation",
+    "persistent-memory",
+    "conversational-ai",
+    "roleplay",
+    "event-sourcing",
+    "local-first",
+    "sqlite",
+    "python",
+    "ollama",
+    "lm-studio",
+    "ki-charaktere",
+    "lebenssimulation",
+    "langzeitgedaechtnis",
+    "i18n"
+  ],
+  "description_en": "Persistent life simulation for AI characters, LLM personas and NPCs. Jobs, daily routines, chat-aware schedules and long-term memory in a local-first Python engine.",
+  "description_de": "Fortlaufende Lebenssimulation für KI-Charaktere, LLM-Personas und NPCs: Berufe, Routinen, gesprächsabhängige Tagespläne und Langzeitgedächtnis. Lokal mit Python.",
+  "description_bilingual": "EN: Persistent life simulation for AI characters, LLM personas and NPCs: jobs, routines, chat-aware schedules and memory. Local-first Python. | DE: Fortlaufender Alltag für KI-Charaktere, LLM-Personas und NPCs: Berufe, Routinen, gesprächsabhängige Pläne und Gedächtnis. Lokal mit Python."
 }

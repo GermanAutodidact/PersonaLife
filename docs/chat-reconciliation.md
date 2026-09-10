@@ -1,5 +1,7 @@
 # Chat reconciliation
 
+[Deutsch](chat-reconciliation.de.md)
+
 Call `start_chat_event` before advancing beyond the user's real session start. It advances ordinary life to that instant, pauses active work, then records the session. `advance_to` during an open session records chat time only. `end_chat_event` records the final interval, summary, story candidate and future schedule repairs in one command transaction.
 
 `apply_chat_event` wraps start/end atomically for a known bounded interval. Retries use stable session IDs. Reusing an ID with a different start, end, metadata or summary is rejected. Concurrent independent conversations for the same persona are rejected; the host should coalesce turns into one session.

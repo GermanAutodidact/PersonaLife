@@ -4,6 +4,7 @@ import random
 from datetime import date, timedelta
 from .clock import civil, bounds, stamp, instant, minutes
 from .domain import WEEKDAYS, validate_activity
+from .i18n import tr
 
 
 def stable_rng(persona, key):
@@ -89,6 +90,7 @@ def plan_day(p, day, existing, cursor):
     if hi <= lo:
         raise ValueError('Cannot plan a fully elapsed day')
     pid = p['id']
+    label = lambda message, **values: tr(message,p.get('language','en'),**values)
     occupied = [a for a in existing if a['state'] not in {'cancelled', 'missed', 'abandoned'} and instant(a['end']) > lo and instant(a['start']) < hi]
     out = []
 
@@ -119,24 +121,24 @@ def plan_day(p, day, existing, cursor):
             continue
         if any(a.get('shift_date') == sd.isoformat() for a in occupied):
             continue
-        add(f'{sd}:commute-out', 'Travel to work', 'travel', s-route, s, location, 90,
+        add(f'{sd}:commute-out', label('Travel to work'), 'travel', s-route, s, location, 90,
             origin=p['home'], shift_date=sd.isoformat()) if route else None
         # Check each contiguous occupation block rather than assuming planned work happened.
-        points = [(s, min(s+minutes(15), e), 'Preparation', 'work')]
+        points = [(s, min(s+minutes(15), e), label('Preparation'), 'work')]
         if e-s > minutes(90):
             mid = s+(e-s)/2
             points += [(points[0][1], mid, p['occupation']['task_types'][0], 'work'),
-                       (mid, min(mid+minutes(20), e), 'Work break', 'break'),
+                       (mid, min(mid+minutes(20), e), label('Work break'), 'break'),
                        (min(mid+minutes(20), e), e, p['occupation']['task_types'][-1], 'work')]
         elif points[0][1] < e:
-            points.append((points[0][1], e, 'Work tasks', 'work'))
+            points.append((points[0][1], e, label('Work tasks'), 'work'))
         for i, (a,b,title,kind) in enumerate(points):
             added = add(f'{sd}:work:{i}', title, kind, a,b,location,100,
                         shift_date=sd.isoformat(), participants=p['occupation']['coworkers'], deadline=stamp(a))
             if added is False:
                 raise ValueError('Work overlaps an existing commitment')
         if route:
-            add(f'{sd}:commute-home', 'Travel home', 'travel', e,e+route,p['home'],90,
+            add(f'{sd}:commute-home', label('Travel home'), 'travel', e,e+route,p['home'],90,
                 origin=location, shift_date=sd.isoformat())
 
     # Sleep follows a prior late shift and its commute instead of resetting at 00:00.
@@ -154,7 +156,7 @@ def plan_day(p, day, existing, cursor):
                      ('sleep-night',civil(day,p['sleep']['start'],p['timezone']),hi)]:
         # Sleep after today's late shift is generated with tomorrow's morning block.
         if e>s and not overlap(max(s,lo),e):
-            add(key,'Sleep','sleep',s,e,p['home'],75)
+            add(key,label('Sleep'),'sleep',s,e,p['home'],75)
 
     def fit(r, key, desired, duration, priority):
         location = r.get('location', p['home'])
@@ -167,11 +169,11 @@ def plan_day(p, day, existing, cursor):
                 if e+route > hi:
                     return False
                 if route:
-                    add(key+':out','Travel to '+location,'travel',s-route,s,location,priority,origin=p['home'])
+                    add(key+':out',label('Travel to {location}',location=next((place.get('name',location) for place in p['locations'] if place['id']==location),location)),'travel',s-route,s,location,priority,origin=p['home'])
                 add(key,r['title'],r.get('kind','routine'),s,e,location,priority,
                     goal=r.get('goal'), participants=r.get('participants', []))
                 if route:
-                    add(key+':home','Travel home','travel',e,e+route,p['home'],priority,origin=location)
+                    add(key+':home',label('Travel home'),'travel',e,e+route,p['home'],priority,origin=location)
                 return True
             if r.get('hard'):
                 raise ValueError('Hard routine overlaps another obligation')
@@ -183,7 +185,7 @@ def plan_day(p, day, existing, cursor):
             fit(r,r['id'],civil(day,r.get('time','12:00'),p['timezone']),minutes(r['minutes']),
                 80 if r.get('hard') else r.get('priority',60))
     for i,h in enumerate([8,13,19]):
-        fit({'title':'Meal','kind':'meal'},f'meal:{i}',civil(day,f'{h:02}:00',p['timezone']),minutes(30),70)
+        fit({'title':label('Meal'),'kind':'meal'},f'meal:{i}',civil(day,f'{h:02}:00',p['timezone']),minutes(30),70)
     rng = stable_rng(p, day.isoformat())
     if p['hobbies']:
         fit({'title':rng.choice(p['hobbies']),'kind':'hobby'},'hobby',civil(day,'15:00',p['timezone']),minutes(60),40)
@@ -194,8 +196,8 @@ def plan_day(p, day, existing, cursor):
     for i,a in enumerate(all_blocks):
         start,end = instant(a['start']),instant(a['end'])
         if start>pos:
-            add(f'rest:{i}','Free time','rest',pos,min(start,hi),p['home'],20)
+            add(f'rest:{i}',label('Free time'),'rest',pos,min(start,hi),p['home'],20)
         pos=max(pos,end)
     if pos<hi:
-        add('rest:last','Free time','rest',pos,hi,p['home'],20)
+        add('rest:last',label('Free time'),'rest',pos,hi,p['home'],20)
     return sorted(out,key=lambda a:a['start'])

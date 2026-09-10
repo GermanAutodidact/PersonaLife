@@ -4,6 +4,7 @@ import math
 from datetime import date, time
 from zoneinfo import ZoneInfo
 from .clock import instant
+from .i18n import language
 
 STATES = {"planned", "active", "paused", "blocked", "completed", "cancelled", "missed", "abandoned"}
 TERMINAL = {"completed", "cancelled", "missed", "abandoned"}
@@ -126,6 +127,7 @@ def validate_profile_structure(p):
 def validate_persona(raw):
     p = copy.deepcopy(raw)
     validate_profile_structure(p)
+    p["language"] = language(p.get("language", "en"))
     for key in ("id", "name", "timezone", "home", "occupation"):
         if not p.get(key):
             raise ValueError(f"Persona requires {key}")

@@ -1,5 +1,7 @@
 # Memory integration
 
+[Deutsch](memory.de.md)
+
 PersonaLife keeps raw event history, daily closing projections and episodic story events. Selected day-closing candidates are exported to a separate long-term provider. Namespace: `personalife:<persona-id>`.
 
 A record includes stable event ID, content, occurrence timestamp, kind, persona ID, date, importance, participants, location, source and confidence. Source/confidence describe the simulated evidence provenance; they do not assert that an event happened in the physical world.
@@ -25,3 +27,5 @@ Importance, novelty, emotional intensity and social relevance determine tellabil
 ## Optional providers
 
 Mem0 accepts an injected configured client. `infer=False` avoids asking Mem0 to re-extract already-selected records. Letta accepts explicit `put_memory(namespace, record)` / `search_memory(namespace, query)` callables. This is intentionally a bridge, not a guessed legacy API: the current Letta repository is now a landing page with retired server code in `archive`.
+
+German-generated memories remain German and English-generated memories remain English. User text is not automatically translated, and changing language does not rewrite existing memories.

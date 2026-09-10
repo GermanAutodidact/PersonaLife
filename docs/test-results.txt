@@ -17,6 +17,23 @@ test_json_immutable (test_integrations.ProviderTests.test_json_immutable) ... ok
 test_local_llm_adapters (test_integrations.ProviderTests.test_local_llm_adapters) ... ok
 test_openai_compatible_contract (test_integrations.ProviderTests.test_openai_compatible_contract) ... ok
 test_remote_http_rejected (test_integrations.ProviderTests.test_remote_http_rejected) ... ok
+test_german_errors_and_quality_weighted_presets (test_languages.APILanguageTests.test_german_errors_and_quality_weighted_presets) ... ok
+test_bilingual_repository_metadata (test_languages.LanguageTests.test_bilingual_repository_metadata) ... ok
+test_both_help_languages (test_languages.LanguageTests.test_both_help_languages) ... ok
+test_cli_domain_error_localized (test_languages.LanguageTests.test_cli_domain_error_localized) ... ok
+test_document_pairs_and_links (test_languages.LanguageTests.test_document_pairs_and_links) ... ok
+test_dynamic_errors_preserve_identifiers (test_languages.LanguageTests.test_dynamic_errors_preserve_identifiers) ... ok
+test_environment_and_alias (test_languages.LanguageTests.test_environment_and_alias) ... ok
+test_german_subcommand_help (test_languages.LanguageTests.test_german_subcommand_help) ... ok
+test_invalid_cli_choice_localized (test_languages.LanguageTests.test_invalid_cli_choice_localized) ... ok
+test_language_change_preserves_existing_history (test_languages.LanguageTests.test_language_change_preserves_existing_history) ... ok
+test_legacy_profile_defaults_to_english (test_languages.LanguageTests.test_legacy_profile_defaults_to_english) ... ok
+test_llm_requests_context_language (test_languages.LanguageTests.test_llm_requests_context_language) ... ok
+test_noninteractive_german_creation (test_languages.LanguageTests.test_noninteractive_german_creation) ... ok
+test_own_static_errors_have_german_catalog_entries (test_languages.LanguageTests.test_own_static_errors_have_german_catalog_entries) ... ok
+test_preset_identity_and_translations (test_languages.LanguageTests.test_preset_identity_and_translations) ... ok
+test_same_timing_both_languages (test_languages.LanguageTests.test_same_timing_both_languages) ... ok
+test_unknown_language_rejected (test_languages.LanguageTests.test_unknown_language_rejected) ... ok
 test_bounded_context (test_simulation.SimulationTests.test_bounded_context) ... ok
 test_chat_key_collision (test_simulation.SimulationTests.test_chat_key_collision) ... ok
 test_chat_mid_travel_resume (test_simulation.SimulationTests.test_chat_mid_travel_resume) ... ok
@@ -50,6 +67,6 @@ test_spring_dst (test_simulation.SimulationTests.test_spring_dst) ... ok
 test_three_days_night_shifts (test_simulation.SimulationTests.test_three_days_night_shifts) ... ok
 
 ----------------------------------------------------------------------
-Ran 50 tests in 2.725s
+Ran 67 tests in 4.140s
 
 OK

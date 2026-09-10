@@ -1,6 +1,7 @@
 """Occupation templates are editable data, not special cases in the engine."""
 import copy
 from .domain import WEEKDAYS
+from .i18n import tr, language as normalize_language
 
 PRESETS = {}
 for title, days, start, end, tasks in [
@@ -19,10 +20,20 @@ for title, days, start, end, tasks in [
         commute_minutes=0 if title in {'freelancer','unemployed'} else 25,
         coworkers=[],task_types=tasks,exceptions={})
 
-def persona(name='Jenna',pid='jenna',occupation='bartender'):
-    o=copy.deepcopy(PRESETS[occupation])
+def get_presets(language='en'):
+    language=normalize_language(language)
+    result=copy.deepcopy(PRESETS)
+    for key,o in result.items():
+        o['label']=tr(key,language)
+        o['employer']=tr(o['employer'],language)
+        o['task_types']=[tr(t,language) for t in o['task_types']]
+    return result
+
+def persona(name='Jenna',pid='jenna',occupation='bartender',language='en'):
+    language=normalize_language(language)
+    o=get_presets(language)[occupation]
     o['coworkers']=['lisa'] if occupation!='unemployed' else []
-    return dict(id=pid,name=name,age=25,timezone='Europe/Berlin',home='home',seed=42,
+    p = dict(id=pid,name=name,language=language,age=25,timezone='Europe/Berlin',home='home',seed=42,
         occupation=o,locations=[{'id':'home','name':'Home'},{'id':'work','name':'Workplace'},
                               {'id':'shop','name':'Supermarket'},{'id':'gym','name':'Gym'}],
         travel_times={'home->shop':15,'home->gym':20},sleep={'start':'23:00','hours':8},
@@ -30,3 +41,14 @@ def persona(name='Jenna',pid='jenna',occupation='bartender'):
             personality_tags=['helpful','funny'],strength=55,availability='work shifts',location='work',occupation='coworker')],
         routines=[dict(id='shopping',title='Shopping',kind='routine',time='14:00',minutes=45,location='shop',frequency='weekly',weekdays=[1,4],priority=70),
                   dict(id='cleaning',title='Clean apartment',kind='routine',time='12:00',minutes=60,location='home',frequency='daily',priority=60)])
+
+    for location in p["locations"]:
+        location["name"]=tr(location["name"],language)
+    p["hobbies"]=[tr(h,language) for h in p["hobbies"]]
+    for routine in p["routines"]:
+        routine["title"]=tr(routine["title"],language)
+    for relationship in p['relationships']:
+        relationship['personality_tags']=[tr(t,language) for t in relationship['personality_tags']]
+        relationship['availability']=tr(relationship['availability'],language)
+        relationship['occupation']=tr(relationship['occupation'],language)
+    return p

@@ -2,6 +2,7 @@
 import math
 from .clock import instant
 from .planner import stable_rng
+from .i18n import tr
 
 RATES = {
  'sleep': {'energy': 7,'fatigue':-7,'stress':-2,'hunger':2},
@@ -24,12 +25,14 @@ def story_for(p,a):
         return None
     people=a.get('participants',[])
     names={r['id']:r['name'] for r in p['relationships']}
-    who=names.get(people[0],'Someone') if people else None
-    options=(
-        [f'{who} and I solved a small problem during {a["title"]}.',
-         f'{who} made me laugh during {a["title"]}.',
-         f'{a["title"]} was unusually busy; we helped each other.'] if who else
-        [f'I made satisfying progress with {a["title"]}.',f'A small mistake during {a["title"]} gave me an idea for next time.'])
+    lang=p.get('language','en')
+    who=names.get(people[0],tr('Someone',lang)) if people else None
+    templates = (["{who} and I solved a small problem during {title}.",
+                  "{who} made me laugh during {title}.",
+                  "{title} was unusually busy; we helped each other."] if who else
+                 ["I made satisfying progress with {title}.",
+                  "A small mistake during {title} gave me an idea for next time."])
+    options=[tr(message,lang,who=who,title=a['title']) for message in templates]
     importance=rng.randint(3,7)
     return dict(description=rng.choice(options),participants=people,location=a['location'],
                 activity_id=a['id'],importance=importance,novelty=rng.randint(4,9),

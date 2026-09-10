@@ -1,5 +1,7 @@
 # Occupations, routines and travel
 
+[Deutsch](occupation-engine.de.md)
+
 Presets: office_worker, developer, bartender, retail_worker, student, freelancer, performer, electrician, shift_worker, unemployed. All use the same generic occupation model.
 
 ```json

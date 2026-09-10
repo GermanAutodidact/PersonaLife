@@ -1,12 +1,22 @@
 # Validation report
 
+[Deutsch](validation.de.md)
+
 Executed in this build: Linux, Python 3.12, 2026-09-10.
 
-- **50 automated tests passed** in the final local run. Full output is in `test-results.txt`. The wheel also built and installed successfully in an isolated target directory, and its CLI started.
+- **67 automated tests passed** in the final local run. Full output is in `test-results.txt`. The wheel also built and installed successfully in an isolated target directory, and its CLI started.
 - AiMemory round-trip used the actual fetched `database.py` / `models.py` from its current repository. The ordinary test suite skips this optional external integration when AiMemory is not installed.
 - All ten occupation presets passed seven simulated days each with a daily 10:25–12:10 chat and a consistency check after every day.
 - Three-day Jenna example: 319 ledger events, 54 executed segments and 11 exported selected memories in the generated example run.
 - Original plans remain available after rescheduling; daily examples include relationships and context from the next day.
+
+## 1.1.0 bilingual verification
+
+Seventeen language tests cover English/German CLI help and setup, translated domain errors, environment/default handling, stable preset IDs, locale-aware API responses, requested LLM language and unchanged simulation timing/progress across languages. The suite also checks all public guide pairs and local links, repository descriptions, static application error catalog coverage, unsupported languages and preservation of historical/user text.
+
+Both language versions of the three-day demo produced 319 events, 54 actual segments and 11 selected memories. Default/generated labels and narrative text differ by language; canonical identifiers and time/state calculations stay stable. Updated JSON/Markdown examples are committed in both languages.
+
+Third-party diagnostics, source-code identifiers and the original Apache license are deliberately not translated. GitHub has one About field: the prepared metadata offers English, German and combined text; actual repository settings are not changed by saving that file.
 
 ## 1.0.1 hardening checks
 

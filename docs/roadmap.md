@@ -1,5 +1,7 @@
 # Roadmap and release readiness
 
+[Deutsch](roadmap.de.md)
+
 These are open directions, not promises of implemented features or delivery dates.
 
 ## Working developer baseline
@@ -21,6 +23,6 @@ Document operating limits, exercise migrations and recovery, test long-running s
 
 ## Public presentation and discovery
 
-The English README explains intended users, concrete benefits, supported behavior and limits. A German introduction is included. Package metadata points to source, documentation and issues. Suggested GitHub About text and relevant topics are in `repository-metadata.json`; that file does not apply repository settings automatically.
+The English and German documentation explain intended users, concrete benefits, supported behavior and limits with equivalent coverage. Package metadata points to source, documentation and issues. Suggested GitHub About text and relevant topics are in `repository-metadata.json`; that file does not apply repository settings automatically.
 
 Still useful for a public launch: apply About/topics, record a short real demonstration, publish an explicitly scoped release, and share it with relevant developer communities. A PyPI package, release announcement and dedicated demo website have not been published. Clear metadata improves classification and reader understanding; it cannot guarantee traffic, ranking or adoption.
