@@ -1,0 +1,4 @@
+{
+  "description": "Persistent life simulation for AI characters, LLM personas and NPCs. Jobs, daily routines, chat-aware schedules and long-term memory in a local-first Python engine.",
+  "topics": ["ai-characters", "ai-companion", "llm", "persona", "npc", "life-simulation", "character-simulation", "persistent-memory", "conversational-ai", "roleplay", "event-sourcing", "local-first", "sqlite", "python", "ollama", "lm-studio"]
+}

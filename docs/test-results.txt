@@ -3,6 +3,11 @@ test_full_dst_days_execute_actual_duration (test_adversarial.AdversarialTests.te
 test_shift_leave_and_home_office (test_adversarial.AdversarialTests.test_shift_leave_and_home_office) ... ok
 test_shift_overtime_is_repeatable (test_adversarial.AdversarialTests.test_shift_overtime_is_repeatable) ... ok
 test_two_instances_observe_same_canonical_state (test_adversarial.AdversarialTests.test_two_instances_observe_same_canonical_state) ... ok
+test_invalid_profiles_rejected_before_persistence (test_hardening.ProfileValidationTests.test_invalid_profiles_rejected_before_persistence) ... ok
+test_profile_metadata_updates_preserve_learned_relationship (test_hardening.ProfileValidationTests.test_profile_metadata_updates_preserve_learned_relationship) ... ok
+test_incremental_matches_full_replay (test_hardening.ReplayTests.test_incremental_matches_full_replay) ... ok
+test_new_events_do_not_replay_old_history (test_hardening.ReplayTests.test_new_events_do_not_replay_old_history) ... ok
+test_rollback_invalidates_incremental_cache (test_hardening.ReplayTests.test_rollback_invalidates_incremental_cache) ... ok
 test_api_full_flow (test_integrations.APITests.test_api_full_flow) ... ok
 test_auth_required (test_integrations.APITests.test_auth_required) ... ok
 test_no_arbitrary_method (test_integrations.APITests.test_no_arbitrary_method) ... ok
@@ -45,6 +50,6 @@ test_spring_dst (test_simulation.SimulationTests.test_spring_dst) ... ok
 test_three_days_night_shifts (test_simulation.SimulationTests.test_three_days_night_shifts) ... ok
 
 ----------------------------------------------------------------------
-Ran 45 tests in 2.662s
+Ran 50 tests in 2.725s
 
 OK

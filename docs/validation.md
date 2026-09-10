@@ -2,11 +2,21 @@
 
 Executed in this build: Linux, Python 3.12, 2026-09-10.
 
-- **45 automated tests passed** in the final local run. Full output is in `test-results.txt`. The wheel also built and installed successfully in an isolated target directory, and its CLI started.
+- **50 automated tests passed** in the final local run. Full output is in `test-results.txt`. The wheel also built and installed successfully in an isolated target directory, and its CLI started.
 - AiMemory round-trip used the actual fetched `database.py` / `models.py` from its current repository. The ordinary test suite skips this optional external integration when AiMemory is not installed.
 - All ten occupation presets passed seven simulated days each with a daily 10:25–12:10 chat and a consistency check after every day.
 - Three-day Jenna example: 319 ledger events, 54 executed segments and 11 exported selected memories in the generated example run.
 - Original plans remain available after rescheduling; daily examples include relationships and context from the next day.
+
+## 1.0.1 hardening checks
+
+The additional tests first reproduced invalid-profile acceptance, stale contact metadata and unnecessary full-history replay. The fixes reject invalid input before persistence, preserve learned relationship history during metadata updates, and compare incremental projections against complete replay including rollback recovery.
+
+A 30-day simulation with a daily 10:25–12:10 conversation passed a consistency check after every day: 3,084 events, 503 actual segments and 517 activity records. It took 16.661 seconds on this execution environment; this single measurement is not a throughput guarantee.
+
+A seven-day catch-up measured 1.380 seconds before and 0.670 seconds after incremental replay in single local runs. Workload and event count were unchanged (606 events). The regression test verifies that an appended hook event processes only that new event, rather than relying on a fragile timing threshold.
+
+The 1.0.1 wheel built successfully without network access. README local links and the suggested 164-character description / 16 topic names were validated. GitHub About settings still need to be applied by a repository administrator; storing the metadata JSON does not change those settings.
 
 ## Tested adversarial cases
 

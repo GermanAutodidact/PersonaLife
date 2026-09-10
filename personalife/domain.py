@@ -14,8 +14,118 @@ def number(value, low, high, name):
         raise ValueError(f"{name} must be between {low} and {high}")
     return value
 
+def text_value(value, name):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{name} must be nonempty text")
+    return value
+
+
+def civil_time(value):
+    text_value(value, "Civil time")
+    result = time.fromisoformat(value)
+    if result.tzinfo is not None:
+        raise ValueError("Civil schedule times must not include UTC offsets")
+    return result
+
+
+def shift_pair(value):
+    if value is None:
+        return
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError("Shift requires a two-element start/end list or null")
+    start, end = map(civil_time, value)
+    seconds = lambda t: t.hour * 3600 + t.minute * 60 + t.second + t.microsecond / 1e6
+    duration = (seconds(end) - seconds(start)) % 86400 or 86400
+    if duration > 16 * 3600:
+        raise ValueError("Shift exceeds 16 nominal hours")
+
+
+def validate_profile_structure(p):
+    if not isinstance(p, dict):
+        raise ValueError("Persona must be a JSON object")
+    for key in ("id", "name", "timezone", "home"):
+        text_value(p.get(key), key)
+    for key in ("occupation", "sleep", "travel_times"):
+        if key in p and not isinstance(p[key], dict):
+            raise ValueError(f"{key} must be an object")
+    for key in ("locations", "relationships", "routines", "hobbies"):
+        if key in p and not isinstance(p[key], list):
+            raise ValueError(f"{key} must be a list")
+    for key in ("locations", "relationships", "routines"):
+        seen = set()
+        for item in p.get(key, []):
+            if not isinstance(item, dict):
+                raise ValueError(f"{key} entries must be objects")
+            identifier = text_value(item.get("id"), key + " ID")
+            if identifier in seen:
+                raise ValueError(f"Duplicate {key} ID: {identifier}")
+            seen.add(identifier)
+    for hobby in p.get("hobbies", []):
+        text_value(hobby, "Hobby")
+    locations = {x["id"] for x in p.get("locations", [{"id": p["home"]}])}
+    relationships = {x["id"] for x in p.get("relationships", [])}
+    for r in p.get("relationships", []):
+        text_value(r.get("name"), "Relationship name")
+    for edge in p.get("travel_times", {}):
+        if not isinstance(edge, str) or len(edge.split("->")) != 2:
+            raise ValueError("Travel edge must have origin->destination form")
+        if not set(edge.split("->")) <= locations:
+            raise ValueError("Unknown travel edge endpoint")
+    occ = p.get("occupation", {})
+    text_value(occ.get("title"), "Occupation title")
+    for key in ("workweek", "exceptions", "variability"):
+        if not isinstance(occ.get(key, {}), dict):
+            raise ValueError(f"Occupation {key} must be an object")
+    for key in ("coworkers", "task_types"):
+        if key in occ and not isinstance(occ[key], list):
+            raise ValueError(f"Occupation {key} must be a list")
+        for value in occ.get(key, []):
+            text_value(value, key)
+    if "task_types" in occ and not occ["task_types"]:
+        raise ValueError("Occupation needs at least one task type")
+    for value in occ.get("workweek", {}).values():
+        shift_pair(value)
+    for day, exception in occ.get("exceptions", {}).items():
+        date.fromisoformat(day)
+        if isinstance(exception, dict):
+            leave = exception.get("leave")
+            if leave is not None and leave not in {"vacation", "sick", "off"}:
+                raise ValueError("Unknown leave type")
+            if leave is None and "shift" not in exception:
+                raise ValueError("Work exception requires a shift or leave")
+            if exception.get("location", occ.get("workplace", p["home"])) not in locations:
+                raise ValueError("Unknown exception workplace")
+            shift_pair(exception.get("shift"))
+        else:
+            shift_pair(exception)
+    variation = occ.get("variability", {})
+    for key, value in variation.items():
+        if key.endswith("_probability"):
+            number(value, 0, 1, key)
+    if "overtime_minutes" in variation:
+        number(variation["overtime_minutes"], 0, 480, "overtime minutes")
+    if "sleep" in p:
+        civil_time(p["sleep"].get("start"))
+    for r in p.get("routines", []):
+        civil_time(r.get("time", "12:00"))
+        weekdays = r.get("weekdays", [0])
+        if not isinstance(weekdays, list) or any(type(d) is not int or not 0 <= d <= 6 for d in weekdays):
+            raise ValueError("Routine weekdays must be integers from 0 through 6")
+        if type(r.get("month_day", 1)) is not int or not 1 <= r.get("month_day", 1) <= 31:
+            raise ValueError("Routine month_day must be an integer from 1 through 31")
+        dates = r.get("dates", [])
+        if not isinstance(dates, list):
+            raise ValueError("Custom routine dates must be a list")
+        for day in dates:
+            date.fromisoformat(day)
+        participants = r.get("participants", [])
+        if not isinstance(participants, list) or any(not isinstance(x, str) or x not in relationships for x in participants):
+            raise ValueError("Routine participants must reference known relationships")
+
+
 def validate_persona(raw):
     p = copy.deepcopy(raw)
+    validate_profile_structure(p)
     for key in ("id", "name", "timezone", "home", "occupation"):
         if not p.get(key):
             raise ValueError(f"Persona requires {key}")

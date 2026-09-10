@@ -58,9 +58,16 @@ class Ledger:
                         (event_id, persona, at, kind, payload, previous, digest))
         return event_id
 
-    def read(self, persona=None):
-        rows = self.db.execute("SELECT * FROM events" + (" WHERE persona=?" if persona else "") + " ORDER BY seq",
-                               (persona,) if persona else ())
+    def read(self, persona=None, after=0, through=None):
+        clauses = ["seq > ?"]
+        params = [after]
+        if persona is not None:
+            clauses.append("persona=?")
+            params.append(persona)
+        if through is not None:
+            clauses.append("seq <= ?")
+            params.append(through)
+        rows = self.db.execute("SELECT * FROM events WHERE " + " AND ".join(clauses) + " ORDER BY seq", params)
         return [{**dict(r), "data": json.loads(r["data"])} for r in rows]
 
     def verify(self):

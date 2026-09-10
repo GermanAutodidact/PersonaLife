@@ -14,7 +14,7 @@ SQLite WAL, a 30-second busy timeout and `BEGIN IMMEDIATE` serialize command wri
 
 The schema is versioned at 1 and unknown versions are refused. Named application models are ledger projections rather than separate writable tables. `backup()` uses SQLite's backup API. Do not copy an active `.sqlite3` file without its WAL; use the backup command.
 
-Per-persona snapshots are currently cached in memory and invalidated by the ledger tip. They are not authoritative. Full replay after changes favors simplicity; large histories should gain persisted checkpoint projections before high-volume production use. There are no cloud services, permanent model loops, Kubernetes components or required embeddings.
+Per-persona snapshots are currently cached in memory and invalidated by the ledger tip. They are not authoritative. New events are replayed incrementally after validating the cached ledger anchor. Rollbacks and changed anchors force a full rebuild, and sequence bounds keep each read consistent with its observed tip. Public results are defensive copies. Large histories should still gain persisted checkpoint projections before high-volume production use. There are no cloud services, permanent model loops, Kubernetes components or required embeddings.
 
 ## Planning/execution
 

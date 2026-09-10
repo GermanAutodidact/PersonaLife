@@ -24,7 +24,17 @@ class PersonaLife:
         cached=self._cache.get(pid)
         if cached and cached[0]==tip['seq'] and cached[1]==tip['hash']:
             return copy.deepcopy(cached[2])
-        s=project(self.ledger.read(pid))
+        state = None
+        after = 0
+        if cached and cached[0] < tip['seq']:
+            anchor = self.ledger.db.execute('SELECT hash FROM events WHERE seq=? AND persona=?',
+                                          (cached[0], pid)).fetchone()
+            if anchor and anchor['hash'] == cached[1]:
+                state, after = cached[2], cached[0]
+        # Drop ownership before mutating: a failed projection cannot leave a
+        # partially updated cache available to the next command.
+        self._cache.pop(pid, None)
+        s=project(self.ledger.read(pid, after=after, through=tip['seq']), state=state)
         self._cache[pid]=(tip['seq'],tip['hash'],s)
         return copy.deepcopy(s)
     def _emit(self,pid,at,kind,data):return self.ledger.append(pid,at,kind,data)

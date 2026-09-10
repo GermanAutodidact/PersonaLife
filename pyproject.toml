@@ -4,12 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "personalife"
-version = "1.0.0"
-description = "Local-first event-sourced life simulation for LLM personas"
+version = "1.0.1"
+description = "Persistent life simulation for AI characters, LLM personas and NPCs"
+keywords = ["ai-characters", "llm", "npc", "life-simulation", "persistent-memory", "local-first"]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 dependencies = ["tzdata>=2024.1; sys_platform == 'win32'"]
+
+[project.urls]
+Repository = "https://github.com/GermanAutodidact/PersonaLife"
+Documentation = "https://github.com/GermanAutodidact/PersonaLife/blob/main/README.md"
+Issues = "https://github.com/GermanAutodidact/PersonaLife/issues"
 
 [project.scripts]
 personalife = "personalife.cli:main"

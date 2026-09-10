@@ -2,8 +2,8 @@
 import copy
 from .clock import instant
 
-def project(events):
-    s = {"persona": None, "cursor": None, "activities": {}, "original": {}, "actual": [],
+def project(events, state=None):
+    s = state if state is not None else {"persona": None, "cursor": None, "activities": {}, "original": {}, "actual": [],
          "days": [], "closed": {}, "chat": None, "chats": {}, "stories": [], "hooks_used": [],
          "location": None, "relationships": {}, "exports": [],
          "state": {"energy": 70, "stress": 20, "mood_valence": 60, "social_energy": 70, "hunger": 20, "fatigue": 30}}
@@ -12,7 +12,13 @@ def project(events):
         if k in {"PERSONA_CREATED", "PERSONA_UPDATED"}:
             s["persona"] = d
             for r in d["relationships"]:
-                s["relationships"].setdefault(r["id"], r)
+                previous = s["relationships"].get(r["id"])
+                updated = copy.deepcopy(r)
+                if previous:
+                    for key in ("strength", "last_interaction", "shared_history"):
+                        if key in previous:
+                            updated[key] = copy.deepcopy(previous[key])
+                s["relationships"][r["id"]] = updated
             if k == "PERSONA_CREATED":
                 s["cursor"], s["location"] = e["at"], d["home"]
         elif k == "DAY_PLANNED":

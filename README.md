@@ -1,14 +1,45 @@
-# PersonaLife
+# PersonaLife — Persistent Life Simulation for AI Characters
 
-PersonaLife gives an existing LLM / ChatGPT persona a continuous simulated life outside the LLM itself.
+**Give your AI characters a life between conversations.**
 
-A local Python engine maintains an occupation, routines, locations, relationships, plans, executed activities and memories. Conversations occupy simulated time and change the remaining schedule. An append-only SQLite event ledger owns history; model-generated prose never changes it.
+[![Tests](https://github.com/GermanAutodidact/PersonaLife/actions/workflows/tests.yml/badge.svg)](https://github.com/GermanAutodidact/PersonaLife/actions/workflows/tests.yml)
+[Apache-2.0](LICENSE) · Python 3.11+ · Local-first · [Deutsch](README.de.md)
 
-**This is fictional life simulation.** It does not assert that an AI has real-world experiences. A host chat application must call the integration API; installing this package alone does not connect ChatGPT or Gemini.
+PersonaLife is an **open-source Python life simulation engine for LLM personas, AI companions and persistent NPCs**. It gives a character a job, daily routines, travel time, relationships and a continuing history—stored outside the language model.
+
+When you return to a conversation, the character has a simulated day to draw from. When you stay and talk, that conversation takes time: shopping can move, cleaning can pause, and a work shift can start late. **What was planned and what actually happened in the simulation remain separate.**
+
+Switch language models without starting the character's history over. The core runs locally with SQLite, needs no API key and makes no LLM calls. Optional adapters connect long-term memory and narrative providers.
+
+[Run the three-day demo](#quick-start) · [Python / HTTP integration](docs/integrations.md) · [Architecture](docs/architecture.md) · [Contribute](CONTRIBUTING.md)
+
+## A character's day can change because you were there
+
+| Situation | PersonaLife records |
+|---|---|
+| Shopping was planned for 17:00; you chat from 16:30 to 18:15 | The conversation occupies that time; shopping moves and the reason is recorded. |
+| Cleaning needs 60 minutes; the chat starts after 25 minutes | 25 minutes stay completed, with 35 minutes left to resume. |
+| A shift starts at 17:00; your conversation ends at 16:55 with a 25-minute commute | Arrival is no earlier than 17:20. The character cannot teleport to work. |
+| The program has been offline for six hours | Deterministic catch-up advances the simulated life when it returns. |
+| You change the LLM provider | The same persona, relationships, timeline and memories remain available. |
+
+This continuity gives a character something grounded to talk about: a work moment, an unfinished task, a changed plan or a shared conversation. Conversation hooks surface suitable topics without forcing one into every response.
+
+## Built for developers of persistent characters
+
+Use PersonaLife as the simulation layer in an AI companion, roleplay application, virtual-character experience or NPC prototype. A Python API and authenticated local HTTP API let your chat host supply session timing and retrieve bounded model context.
+
+- **Daily life:** editable occupation presets, custom shifts, recurring routines, sleep and travel.
+- **Continuity:** append-only event history, activity progress and persistent social relationships.
+- **Chat-aware scheduling:** real session intervals interrupt activities and reshape future plans.
+- **Memory:** local JSON or AiMemory, with optional Mem0 and Letta bridge interfaces.
+- **Model choice:** OpenAI-compatible endpoints, LM Studio and Ollama for optional narrative rendering.
+
+**Project status:** working developer baseline with automated tests, not a turnkey companion app or a production-certified service. No native ChatGPT/Gemini connection is installed automatically. All character experiences are fictional simulation. See the [tested behavior and limits](docs/validation.md) before integrating.
 
 ## Quick start
 
-Python 3.11 or newer. Windows 11, Linux and macOS are supported by the code; the tests in this build were run on Linux/Python 3.12. Windows includes `tzdata` as a platform dependency.
+Python 3.11 or newer. Windows 11, Linux and macOS are supported by the code; local tests run on Linux/Python 3.12, with GitHub CI covering Windows and Linux on Python 3.11–3.13. Windows includes `tzdata` as a platform dependency.
 
 ```powershell
 # In the downloaded/cloned PersonaLife directory
@@ -116,6 +147,23 @@ Provider calls are opt-in and only generate presentation text. No paid provider,
 `personalife validate jenna` verifies ledger integrity, actual overlaps, location continuity, progress and chat duration. The test suite covers the required chat/work/shopping/cleaning scenarios, restart catch-up, three-day relationships, immutable history, timezone errors, DST, API authorization and actual AiMemory import/retrieval. See [validation report](docs/validation.md).
 
 The API/CLI form a usable engine, not an installed ChatGPT connector or graphical app. Mem0 is tested at its adapter boundary, not against a live account. Letta is an injected bridge because its current main repository no longer contains the supported server. Generated prose remains untrusted presentation, not canonical truth. Replay currently favors auditability over large-scale throughput; there is no production load certification. Detailed behavioral limits and extension points are documented under [architecture](docs/architecture.md).
+
+## Questions developers ask
+
+**Is this another chatbot or memory database?**  
+PersonaLife supplies the state and simulated events a chatbot can talk about. Your host handles conversation and model access; an optional memory provider stores selected long-term records.
+
+**Does it require a paid model or a constantly running agent?**  
+The simulation needs neither. Use lazy catch-up or an inexpensive heartbeat. Optional external providers have their own requirements and costs.
+
+**Can it connect directly to ChatGPT, Gemini or a game engine?**  
+It provides Python and local HTTP interfaces for a host to integrate. Dedicated browser, mobile and game-engine connectors are not bundled.
+
+**Will the persona always tell the truth about its simulated day?**  
+The ledger separates plans from executed events and model output cannot rewrite it. A language model can still embellish its response; stronger output grounding belongs in the host.
+
+**Where can I help?**  
+Start with [CONTRIBUTING.md](CONTRIBUTING.md) and [the roadmap](docs/roadmap.md). Reproducible timeline bugs, integration examples and installation feedback are especially useful.
 
 ## License and source research
 
