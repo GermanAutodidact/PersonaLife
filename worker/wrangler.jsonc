@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "personalife-edge-gateway",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-14",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ORIGIN_URL": "http://127.0.0.1:8787",
+    "PERSONA_ID": "jenna",
+    "FALLBACK_LANGUAGE": "de"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
