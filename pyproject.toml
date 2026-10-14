@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "personalife"
-version = "1.1.0"
+version = "1.2.0"
 description = "Persistent life simulation for AI characters / Fortlaufende Lebenssimulation für KI-Charaktere"
 classifiers = ["Natural Language :: English", "Natural Language :: German"]
 keywords = ["ai-characters", "llm", "npc", "life-simulation", "persistent-memory", "local-first"]

@@ -73,6 +73,7 @@ DE = {
  'Unknown route':'Unbekannter Endpunkt','JSON object required':'Ein JSON-Objekt ist erforderlich',
  'Internal error; inspect configuration and database locally':'Interner Fehler; Konfiguration und Datenbank lokal prüfen',
  'API binds to loopback only; use an authenticated proxy for remote access':'Die API lauscht nur lokal; für Fernzugriff einen authentifizierten Proxy verwenden',
+ 'summary is required':'Eine Zusammenfassung ist erforderlich','persona_id is required':'persona_id ist erforderlich',
  'Set PERSONALIFE_API_TOKEN before starting the API':'Vor dem API-Start PERSONALIFE_API_TOKEN setzen',
  'Civil schedule times must not include UTC offsets':'Lokale Uhrzeiten im Plan dürfen keine UTC-Offsets enthalten',
  'Shift requires a two-element start/end list or null':'Eine Schicht benötigt eine Liste aus Beginn und Ende oder null',

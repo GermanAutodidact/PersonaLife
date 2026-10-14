@@ -29,9 +29,11 @@ class APITests(unittest.TestCase):
  def test_auth_required(self):
   with self.assertRaises(HTTPError) as cm:self.request('/v1/presets',token='wrong')
   self.assertEqual(cm.exception.code,401)
+  cm.exception.close()
  def test_no_arbitrary_method(self):
   with self.assertRaises(HTTPError) as cm:self.request('/v1/personas/jenna/_emit',{'kind':'FAKE'})
   self.assertEqual(cm.exception.code,404)
+  cm.exception.close()
  def test_token_required(self):
   with self.assertRaises(ValueError):create_server(self.path,port=0)
 

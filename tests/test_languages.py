@@ -129,6 +129,7 @@ class APILanguageTests(unittest.TestCase):
     req=Request(url,headers={'Accept-Language':'de-DE'})
     with self.assertRaises(HTTPError) as ex:urlopen(req,timeout=5)
     self.assertEqual(json.loads(ex.exception.read())['error'],'Authentifizierung erforderlich')
+    ex.exception.close()
     req=Request(url,headers={'Authorization':'Bearer test','Accept-Language':'en;q=0.2,de-DE;q=0.9'})
     with urlopen(req,timeout=5) as result:self.assertEqual(json.loads(result.read())['bartender']['label'],'Barkeeper/in')
     req=Request(url,headers={'Authorization':'Bearer test','Accept-Language':'de;q=0,en;q=1'})

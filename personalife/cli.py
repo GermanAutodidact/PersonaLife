@@ -10,6 +10,7 @@ from .service import PersonaLife
 from .presets import PRESETS, persona, get_presets
 from .validation import validate
 from .i18n import language, tr, error_message
+from .prompt import render_roleplay_prompt
 
 
 def output(value):
@@ -52,23 +53,24 @@ def main(argv=None):
                         help=tr('Interface language (en/de)', lang))
     parser.add_argument('--db', default='personalife.sqlite3', help=tr('Database path', lang))
     sub = parser.add_subparsers(dest='command', required=True,
-                               parser_class=lambda **kw: Parser(lang=lang, **kw))
+                                parser_class=lambda **kw: Parser(lang=lang, **kw))
     def command(name, help_text):
         return sub.add_parser(name, help=tr(help_text, lang), description=tr(help_text, lang))
     command('presets', 'List occupation presets')
     create = command('persona', 'Create a persona')
     csub = create.add_subparsers(dest='persona_command', required=True,
-                                parser_class=lambda **kw: Parser(lang=lang, **kw))
+                                 parser_class=lambda **kw: Parser(lang=lang, **kw))
     new = csub.add_parser('create', help=tr('Create a persona', lang))
     for option, help_text in [('file','JSON profile path'),('start','Timezone-aware timestamp'),
                               ('name','Persona name'),('id','Persona identifier')]:
         new.add_argument('--'+option, help=tr(help_text, lang))
     new.add_argument('--occupation', choices=PRESETS, help=tr('Occupation preset ID', lang))
     for name, help_text in [('state','Read current state'),('context','Build model context'),
+                           ('prompt','Generate roleplay system prompt'),
                            ('hooks','Show conversation hooks'),('actual','Show actual timeline'),
                            ('relationships','Show relationships'),('validate','Validate consistency'),
                            ('memories','Show memories')]:
-        command(name, help_text).add_argument('persona_id', help=tr('Persona identifier', lang))
+        command(name, help_text).add_argument('persona_id', help=tr(help_text, lang))
     for name, help_text in [('plan','Generate a daily plan'),('day','Show a day'),('close-day','Close an elapsed day')]:
         p=command(name,help_text);p.add_argument('persona_id',help=tr('Persona identifier',lang));p.add_argument('date',help=tr('Civil date YYYY-MM-DD',lang))
     p=command('advance','Advance simulated time');p.add_argument('persona_id',help=tr('Persona identifier',lang));p.add_argument('--to',help=tr('Timezone-aware timestamp',lang))
@@ -76,16 +78,24 @@ def main(argv=None):
     p.add_argument('--start',required=True,help=tr('Timezone-aware timestamp',lang));p.add_argument('--end',required=True,help=tr('Timezone-aware timestamp',lang))
     p.add_argument('--summary',required=True,help=tr('Conversation summary',lang));p.add_argument('--key',help=tr('Stable retry key',lang))
     p=command('serve','Start the local API');p.add_argument('--port',type=int,default=8787,help=tr('TCP port',lang))
+    p.add_argument('--host',default='127.0.0.1',help=tr('Host binding',lang))
+    p.add_argument('--allow-remote',action='store_true',help=tr('Allow binding to non-loopback interfaces',lang))
+    p.add_argument('--cors',action='store_true',help=tr('Enable CORS headers for web/mobile clients',lang))
+    p=command('mcp','Start the MCP (Model Context Protocol) server over stdio')
     p=command('heartbeat','Run the heartbeat');p.add_argument('--minutes',type=float,default=15,help=tr('Interval in minutes',lang));p.add_argument('--once',action='store_true',help=tr('Run once and exit',lang))
     p=command('backup','Back up the database');p.add_argument('destination',help=tr('Backup destination',lang))
     args=parser.parse_args(argv)
     ask=lambda message,**values:input(tr(message,lang,**values))
     try:
         if args.command=='presets':output(get_presets(lang));return
+        if args.command=='mcp':
+            from .mcp_server import MCPServer
+            MCPServer(database=args.db).run_stdio()
+            return
         if args.command=='serve':
             from .api import create_server
-            server=create_server(args.db,port=args.port,default_language=lang)
-            print(tr('PersonaLife API on {url}',lang,url=f'http://127.0.0.1:{server.server_port}'))
+            server=create_server(args.db,host=args.host,port=args.port,default_language=lang,allow_remote=args.allow_remote,enable_cors=args.cors)
+            print(tr('PersonaLife API on {url}',lang,url=f'http://{args.host}:{server.server_port}'))
             try:server.serve_forever()
             except KeyboardInterrupt:pass
             finally:server.server_close()
@@ -120,8 +130,12 @@ def main(argv=None):
                 output(app.create_persona(profile,args.start or datetime.now(timezone.utc).isoformat()));return
             if args.command=='backup':app.ledger.backup(args.destination);output({'backup':args.destination});return
             pid=args.persona_id
+            def _get_prompt():
+                app.advance_to(pid, datetime.now(timezone.utc))
+                return {'prompt': render_roleplay_prompt(app.get_persona_context(pid), app._s(pid).get('persona'))}
             commands={
                 'state':lambda:app.get_current_state(pid),'context':lambda:app.get_persona_context(pid),
+                'prompt':_get_prompt,
                 'hooks':lambda:app.get_conversation_hooks(pid),'actual':lambda:app.get_actual_timeline(pid),
                 'relationships':lambda:app.get_relationships(pid),'validate':lambda:validate(app,pid),
                 'memories':lambda:app.get_memories(pid),'plan':lambda:app.generate_day(pid,args.date),
