@@ -1,4 +1,4 @@
-"""JSON HTTP API and OpenAPI connector; one SQLite connection per request."""
+"""JSON HTTP API, Web Dashboard and Connectors; one SQLite connection per request."""
 import hmac
 import json
 import os
@@ -12,6 +12,8 @@ from .validation import validate
 from .prompt import render_roleplay_prompt
 from .openapi import get_openapi_spec
 from .clock import instant
+from .dashboard import render_dashboard_html
+from .connectors import get_all_platform_integrations, get_platform_integration
 
 MAX_BODY = 1_000_000
 
@@ -74,11 +76,27 @@ def create_server(database, host='127.0.0.1', port=8787, token=None, default_lan
             parsed = urlparse(self.path)
             parts = [p for p in parsed.path.strip('/').split('/') if p]
 
+            host_header = self.headers.get('Host', f'{host}:{port}')
+            scheme = 'https' if self.headers.get('X-Forwarded-Proto') == 'https' else 'http'
+            base_url = f'{scheme}://{host_header}'
+
+            # Public Web Dashboard
+            if method == 'GET' and parts in ([], ['dashboard'], ['v1', 'dashboard']):
+                html = render_dashboard_html(persona_id='jenna', base_url=base_url)
+                data = html.encode('utf-8')
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(data)))
+                self.send_header('Cache-Control', 'no-store')
+                if enable_cors:
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(data)
+                return
+
             # Public OpenAPI schema inspection
             if method == 'GET' and parts in (['openapi.json'], ['v1', 'openapi.json']):
-                host_header = self.headers.get('Host', f'{host}:{port}')
-                scheme = 'https' if self.headers.get('X-Forwarded-Proto') == 'https' else 'http'
-                return self.send_json(200, get_openapi_spec(f'{scheme}://{host_header}', language=self.response_language))
+                return self.send_json(200, get_openapi_spec(base_url, language=self.response_language))
 
             if not hmac.compare_digest(self.headers.get('Authorization', ''), 'Bearer ' + token):
                 return self.send_json(401, {'error': 'Authentication required'})
@@ -107,12 +125,22 @@ def create_server(database, host='127.0.0.1', port=8787, token=None, default_lan
                             profile = {**profile, 'language': profile.get('language', self.response_language)}
                         return self.send_json(201, app.create_persona(profile, body['start_time']))
 
-                    if len(parts) != 4 or parts[:2] != ['v1', 'personas']:
+                    if len(parts) < 3 or parts[:2] != ['v1', 'personas']:
                         return self.send_json(404, {'error': 'Unknown route'})
 
-                    pid, action = parts[2:]
+                    pid = parts[2]
                     auto_advance = query.get('auto_advance', ['false'])[0].lower() in {'true', '1', 'yes'}
                     now_val = datetime.now(timezone.utc) if auto_advance else None
+
+                    # Specific platform connector endpoint
+                    if len(parts) == 5 and parts[3] == 'connectors' and method == 'GET':
+                        target = parts[4]
+                        return self.send_json(200, get_platform_integration(target, app._s(pid).get('persona', {}), base_url=base_url, language=self.response_language))
+
+                    if len(parts) != 4:
+                        return self.send_json(404, {'error': 'Unknown route'})
+
+                    action = parts[3]
 
                     def _get_prompt():
                         ctx = app.get_persona_context(pid, now=now_val)
@@ -147,6 +175,7 @@ def create_server(database, host='127.0.0.1', port=8787, token=None, default_lan
                             'state': _get_state,
                             'context': lambda: app.get_persona_context(pid, now=now_val),
                             'prompt': _get_prompt,
+                            'connectors': lambda: get_all_platform_integrations(app._s(pid).get('persona', {}), base_url=base_url, language=self.response_language),
                             'hooks': lambda: app.get_conversation_hooks(pid),
                             'actual': lambda: app.get_actual_timeline(pid),
                             'plan': lambda: app.get_planned_timeline(pid, query.get('original', ['false'])[0] == 'true'),
