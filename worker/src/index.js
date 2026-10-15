@@ -198,7 +198,67 @@ export default {
     }
 
     // 3. Proxy all other API / Dashboard requests to the Origin (Tunnel / Local Server)
-    const originUrl = (env.ORIGIN_URL || "http://127.0.0.1:8787").replace(/\/$/, "");
+    const originUrl = (env.ORIGIN_URL || "").replace(/\/$/, "");
+    const isLoopback = !originUrl || originUrl.includes("127.0.0.1") || originUrl.includes("localhost");
+
+    // If no public tunnel is configured or loopback is passed, use Edge Fallbacks directly
+    if (isLoopback) {
+      if (url.pathname.includes("/prompt")) {
+        const fallbackName = env.PERSONA_NAME || "Jenna";
+        return Response.json({
+          offline: true,
+          persona_id: env.PERSONA_ID || "jenna",
+          location: "Zuhause (Wohnung)",
+          activity: "Entspannen am Feierabend",
+          prompt: `# ROLLENSPIEL-STATUS: ${fallbackName.toUpperCase()} (CLOUDFLARE EDGE FALLBACK)\n\nDu bist ${fallbackName}. Du lebst in einer gemütlichen Wohnung, arbeitest als Barista und studierst. Du bist gerade am Feierabend und erholst dich. Antworte dem Nutzer authentisch, warmherzig und lebendig auf deinem Smartphone.`
+        }, { headers: corsHeaders });
+      }
+
+      if (url.pathname.includes("/chat-reply") && env.GEMINI_API_KEY) {
+        try {
+          const reqBody = await request.clone().json().catch(() => ({}));
+          const userMsg = reqBody.message || "Hallo!";
+          const fallbackName = env.PERSONA_NAME || "Jenna";
+          const geminiUrl = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+          const geminiResp = await fetch(geminiUrl, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${env.GEMINI_API_KEY}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "gemini-flash-latest",
+              messages: [
+                { role: "system", content: `Du bist ${fallbackName}. Du lebst in einer gemütlichen Wohnung, arbeitest als Barista. Du antwortest kurz, lieb und authentisch auf deinem Smartphone.` },
+                { role: "user", content: userMsg }
+              ]
+            })
+          });
+          if (geminiResp.ok) {
+            const geminiData = await geminiResp.json();
+            const reply = geminiData.choices?.[0]?.message?.content || "Hallo!";
+            return Response.json({
+              reply,
+              persona_id: env.PERSONA_ID || "jenna",
+              persona_name: fallbackName,
+              edge_generated: true
+            }, { headers: corsHeaders });
+          }
+        } catch (_) {}
+      }
+
+      return Response.json({
+        service: "personalife-edge-gateway",
+        status: "edge_mode",
+        message: "Origin is in loopback mode. Configure ORIGIN_URL with your Cloudflare Tunnel public URL to connect directly to your local PC engine.",
+        endpoints: {
+          openapi: "/openapi.json",
+          prompt: "/v1/personas/jenna/prompt",
+          health: "/health"
+        }
+      }, { headers: corsHeaders });
+    }
+
     const targetUrl = new URL(url.pathname + url.search, originUrl);
 
     // Build headers for proxy
