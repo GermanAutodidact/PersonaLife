@@ -367,7 +367,10 @@ def render_dashboard_html(persona_id="jenna", base_url=""):
                 📋 Aktuellen Rollenspiel-Prompt kopieren
             </button>
             <button class="btn btn-secondary" onclick="openChatRecorder()">
-                💬 Gespräch erfassen
+                💬 Gespräch erfassen (Gemini KI)
+            </button>
+            <button class="btn btn-secondary" onclick="testLiveReply()">
+                ✨ Live-Chat (Gemini Flash)
             </button>
             <button class="btn btn-secondary" onclick="refreshState()">
                 🔄 Aktualisieren
@@ -450,11 +453,14 @@ def render_dashboard_html(persona_id="jenna", base_url=""):
                 <button onclick="closeChatRecorder()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
             <p style="font-size: 0.8rem; color: var(--text-muted);">
-                Trage kurz ein, was ihr besprochen habt. Es wird sofort im Langzeitgedächtnis und Ledger gespeichert.
+                Trage eine Zusammenfassung ein ODER füge den rohen Dialog aus ChatGPT, Claude, Grok oder Gemini ein – Google Gemini extrahiert automatisch Erinnerungen und berechnet emotionale Effekte!
             </p>
-            <textarea id="chat-summary-input" rows="3" placeholder="Z.B.: Haben über ihren Arbeitsalltag geredet..." style="background:var(--bg); color:var(--text-main); border:1px solid var(--border); border-radius:10px; padding:10px; outline:none; resize:none; font-size:0.9rem;"></textarea>
-            <div style="display:flex; gap:10px;">
-                <button class="btn btn-primary" style="flex:1;" onclick="submitQuickChat()">💾 Speichern</button>
+            <textarea id="chat-summary-input" rows="4" placeholder="Z.B.: Haben über ihren Tag geredet... ODER kopierten Chatverlauf hier einfügen!" style="background:var(--bg); color:var(--text-main); border:1px solid var(--border); border-radius:10px; padding:10px; outline:none; resize:none; font-size:0.9rem;"></textarea>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-primary" style="flex:1;" onclick="submitGeminiReflect()">✨ Mit Gemini KI analysieren</button>
+                    <button class="btn btn-secondary" style="flex:1;" onclick="submitQuickChat()">💾 Direkt speichern</button>
+                </div>
                 <button class="btn btn-secondary" onclick="closeChatRecorder()">Abbrechen</button>
             </div>
         </div>
@@ -612,6 +618,50 @@ def render_dashboard_html(persona_id="jenna", base_url=""):
                     refreshState();
                 }} else {{
                     showToast("Fehler beim Speichern");
+                }}
+            }} catch (e) {{
+                showToast("Netzwerkfehler");
+            }}
+        }}
+
+        async function submitGeminiReflect() {{
+            const text = document.getElementById("chat-summary-input").value.trim();
+            if (!text) return;
+            showToast("⏳ Gemini KI analysiert Gespräch...");
+            try {{
+                const res = await fetchWithAuth(`/v1/personas/${{currentPersona}}/reflect`, {{
+                    method: "POST",
+                    headers: {{ "Content-Type": "application/json" }},
+                    body: JSON.stringify({{ dialogue: text, duration_minutes: 10 }})
+                }});
+                if (res.ok) {{
+                    closeChatRecorder();
+                    showToast("✨ Erinnerungen & Vitalwerte via Gemini aktualisiert!");
+                    refreshState();
+                }} else {{
+                    showToast("Fehler bei Gemini-Analyse");
+                }}
+            }} catch (e) {{
+                showToast("Netzwerkfehler");
+            }}
+        }}
+
+        async function testLiveReply() {{
+            const msg = prompt("Nachricht an Persona (Live-Test mit Gemini Flash):", "Hallo, wie geht es dir gerade?");
+            if (!msg) return;
+            showToast("⏳ Persona denkt nach (Gemini Flash)...");
+            try {{
+                const res = await fetchWithAuth(`/v1/personas/${{currentPersona}}/chat-reply`, {{
+                    method: "POST",
+                    headers: {{ "Content-Type": "application/json" }},
+                    body: JSON.stringify({{ message: msg, record: true }})
+                }});
+                if (res.ok) {{
+                    const data = await res.json();
+                    alert(`💬 Antwort von ${{data.persona_name || "Persona"}}:\n\n${{data.reply}}`);
+                    refreshState();
+                }} else {{
+                    showToast("Fehler beim Abrufen der Antwort");
                 }}
             }} catch (e) {{
                 showToast("Netzwerkfehler");

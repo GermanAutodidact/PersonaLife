@@ -14,6 +14,7 @@ from .openapi import get_openapi_spec
 from .clock import instant
 from .dashboard import render_dashboard_html
 from .connectors import get_all_platform_integrations, get_platform_integration
+from .gemini import reflect_chat_dialogue, generate_persona_reply, get_gemini_api_key
 
 MAX_BODY = 1_000_000
 
@@ -155,15 +156,73 @@ def create_server(database, host='127.0.0.1', port=8787, token=None, default_lan
                         }
 
                     def _quick_chat():
+                        dialogue = body.get('dialogue')
                         summary = body.get('summary')
+                        if not summary and dialogue:
+                            pname = app._s(pid).get('persona', {}).get('name', 'Persona')
+                            try:
+                                analysis = reflect_chat_dialogue(dialogue, persona_name=pname)
+                                summary = analysis.get('summary', dialogue[:120])
+                            except Exception:
+                                summary = dialogue[:120]
                         if not summary:
-                            raise ValueError('summary is required')
+                            raise ValueError('summary or dialogue is required')
                         mins = max(1.0, float(body.get('duration_minutes', 10)))
                         cur = instant(app._s(pid)['cursor'])
                         now_utc = datetime.now(timezone.utc)
                         start_t = max(cur, now_utc)
                         end_t = start_t + timedelta(minutes=mins)
                         return app.apply_chat_event(pid, start_t, end_t, summary)
+
+                    def _reflect():
+                        dialogue = body.get('dialogue', '')
+                        if not dialogue and 'messages' in body:
+                            dialogue = "\n".join(f"{m.get('role', 'user')}: {m.get('content', '')}" for m in body['messages'])
+                        if not dialogue:
+                            raise ValueError('dialogue or messages is required')
+                        pname = app._s(pid).get('persona', {}).get('name', 'Persona')
+                        analysis = reflect_chat_dialogue(dialogue, persona_name=pname)
+                        
+                        mins = max(1.0, float(body.get('duration_minutes', 10)))
+                        cur = instant(app._s(pid)['cursor'])
+                        now_utc = datetime.now(timezone.utc)
+                        start_t = max(cur, now_utc)
+                        end_t = start_t + timedelta(minutes=mins)
+                        event_res = app.apply_chat_event(pid, start_t, end_t, analysis['summary'])
+                        
+                        for mem_text in analysis.get('memories', []):
+                            try:
+                                app.db.execute("INSERT INTO memory (persona_id, timestamp, text) VALUES (?, ?, ?)", (pid, end_t.isoformat(), mem_text))
+                            except Exception:
+                                pass
+                        return {
+                            'status': 'ok',
+                            'analysis': analysis,
+                            'event': event_res
+                        }
+
+                    def _chat_reply():
+                        user_msg = body.get('message', '')
+                        if not user_msg:
+                            raise ValueError('message is required')
+                        prompt_data = _get_prompt()
+                        pname = app._s(pid).get('persona', {}).get('name', 'Persona')
+                        reply = generate_persona_reply(prompt_data['prompt'], user_msg)
+                        
+                        if body.get('record', True):
+                            cur = instant(app._s(pid)['cursor'])
+                            now_utc = datetime.now(timezone.utc)
+                            start_t = max(cur, now_utc)
+                            end_t = start_t + timedelta(minutes=2)
+                            app.apply_chat_event(pid, start_t, end_t, f"Gespräch: {user_msg[:60]} -> {reply[:60]}")
+                            
+                        return {
+                            'reply': reply,
+                            'persona_id': pid,
+                            'persona_name': pname,
+                            'location': prompt_data.get('location'),
+                            'now': prompt_data.get('now')
+                        }
 
                     def _get_state():
                         if auto_advance:
@@ -197,6 +256,8 @@ def create_server(database, host='127.0.0.1', port=8787, token=None, default_lan
                             'chat-end': lambda: app.end_chat_event(pid, body['end_time'], body['summary'], body['chat_id']),
                             'chat': lambda: app.apply_chat_event(pid, body['start_time'], body['end_time'], body['summary'], body.get('metadata')),
                             'quick-chat': _quick_chat,
+                            'reflect': _reflect,
+                            'chat-reply': _chat_reply,
                             'close-day': lambda: app.close_day(pid, body['date']),
                             'hook-used': lambda: app.mark_hook_used(pid, body['event_id'])
                         }

@@ -233,6 +233,39 @@ export default {
 
     } catch (err) {
       // Graceful offline roleplay fallback if home tunnel / PC is sleeping
+      if (url.pathname.includes("/chat-reply") && env.GEMINI_API_KEY) {
+        try {
+          const reqBody = await request.clone().json().catch(() => ({}));
+          const userMsg = reqBody.message || "Hallo!";
+          const fallbackName = env.PERSONA_NAME || "Jenna";
+          const geminiUrl = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+          const geminiResp = await fetch(geminiUrl, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${env.GEMINI_API_KEY}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "gemini-flash-latest",
+              messages: [
+                { role: "system", content: `Du bist ${fallbackName}. Du antwortest kurz, lebendig und authentisch auf deinem Smartphone via Edge-Gateway.` },
+                { role: "user", content: userMsg }
+              ]
+            })
+          });
+          if (geminiResp.ok) {
+            const geminiData = await geminiResp.json();
+            const reply = geminiData.choices?.[0]?.message?.content || "Hallo!";
+            return Response.json({
+              reply,
+              persona_id: env.PERSONA_ID || "jenna",
+              persona_name: fallbackName,
+              edge_generated: true
+            }, { headers: corsHeaders });
+          }
+        } catch (_) {}
+      }
+
       if (url.pathname.includes("/prompt")) {
         const fallbackName = env.PERSONA_NAME || "Deine Begleiterin";
         return Response.json({

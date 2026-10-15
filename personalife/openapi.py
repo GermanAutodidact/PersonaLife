@@ -118,9 +118,9 @@ def get_openapi_spec(base_url="http://127.0.0.1:8787", language="de"):
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["summary"],
                                     "properties": {
                                         "summary": {"type": "string", "description": "Kurze prägnante Zusammenfassung des Chats"},
+                                        "dialogue": {"type": "string", "description": "Roher Gesprächsverlauf (wird via Gemini automatisch analysiert & zusammengefasst)"},
                                         "duration_minutes": {"type": "number", "default": 10, "description": "Ungefähre Dauer in Minuten"}
                                     }
                                 }
@@ -135,6 +135,76 @@ def get_openapi_spec(base_url="http://127.0.0.1:8787", language="de"):
                                     "schema": {"type": "object"}
                                 }
                             }
+                        }
+                    }
+                }
+            },
+            "/v1/personas/{persona_id}/reflect": {
+                "post": {
+                    "operationId": "reflectDialogue",
+                    "summary": "Analysiert Gesprächsverlauf via Gemini und aktualisiert Gedächtnis & Gemütszustand" if is_de else "Reflect dialogue with Gemini and update memories & vitals",
+                    "parameters": [
+                        {
+                            "name": "persona_id",
+                            "in": "path",
+                            "required": True,
+                            "schema": {"type": "string"}
+                        }
+                    ],
+                    "requestBody": {
+                        "required": True,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["dialogue"],
+                                    "properties": {
+                                        "dialogue": {"type": "string", "description": "Gesamtes Gespräch zwischen Nutzer und Persona"},
+                                        "duration_minutes": {"type": "number", "default": 10}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Erfolgreich analysiert und im Gedächtnis verbucht",
+                            "content": {"application/json": {"schema": {"type": "object"}}}
+                        }
+                    }
+                }
+            },
+            "/v1/personas/{persona_id}/chat-reply": {
+                "post": {
+                    "operationId": "chatWithPersona",
+                    "summary": "Erzeugt eine Live-Antwort der Persona via Google Gemini auf Basis ihres aktuellen Lebenszustands" if is_de else "Generate live in-character response with Gemini based on state",
+                    "parameters": [
+                        {
+                            "name": "persona_id",
+                            "in": "path",
+                            "required": True,
+                            "schema": {"type": "string"}
+                        }
+                    ],
+                    "requestBody": {
+                        "required": True,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": ["message"],
+                                    "properties": {
+                                        "message": {"type": "string", "description": "Nachricht an die Persona"},
+                                        "record": {"type": "boolean", "default": True, "description": "Ob das Gespräch im Lebenslauf verbucht werden soll"}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Antwort der Persona",
+                            "content": {"application/json": {"schema": {"type": "object"}}}
                         }
                     }
                 }
